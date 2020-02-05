@@ -1,0 +1,15 @@
+CXX            = g++
+VISP_CFLAGS    = `pkg-config --cflags visp`
+VISP_LDFLAGS   = `pkg-config --libs visp`
+
+SOURCES=$(shell find . -name "sample*.cpp")
+TARGETS=$(SOURCES:%.cpp=%)
+
+all: $(TARGETS)
+
+%: %.cpp
+	$(CXX) $(VISP_CFLAGS) -o $@ $< $(VISP_LDFLAGS)
+
+clean:
+	rm -f *~ $(TARGETS)
+

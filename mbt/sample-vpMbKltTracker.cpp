@@ -4,11 +4,12 @@
 #include <visp3/core/vpHomogeneousMatrix.h>
 #include <visp3/core/vpCameraParameters.h>
 #include <visp3/core/vpException.h>
+#include <visp3/core/vpXmlParser.h>
 #include <visp3/gui/vpDisplayX.h>
 
 int main()
 {
-#if defined(VISP_HAVE_OPENCV) && (VISP_HAVE_OPENCV_VERSION < 0x030000)
+#if defined(VISP_HAVE_MODULE_KLT) && (defined(VISP_HAVE_OPENCV) && (VISP_HAVE_OPENCV_VERSION >= 0x020100))
   vpMbKltTracker tracker; // Create a model based tracker via KLT points.
   vpImage<unsigned char> I;
   vpHomogeneousMatrix cMo; // Pose computed using the tracker.

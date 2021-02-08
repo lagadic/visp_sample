@@ -13,9 +13,7 @@ int main()
   //acquire an image
   vpImageIo::read(I, "cube.pgm"); // Example of acquisition
 
-#if defined VISP_HAVE_PUGIXML
   tracker.loadConfigFile("cube.xml"); // Load the configuration of the tracker
-#endif
   // load the 3d model, to read .wrl model coin is required, if coin is not installed .cao file can be used.
   tracker.loadModel("cube.cao");
   tracker.initFromPose(I, cMo); // initialize the tracker with the given pose.

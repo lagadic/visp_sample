@@ -14,7 +14,6 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04]
-        build_type: [visp-dir-build-tree, visp-config-build-tree, visp-dir-install-tree, visp.pc-install-tree, visp-config-install-tree]
 
     steps:
     # https://github.com/marketplace/actions/cancel-workflow-action
@@ -60,14 +59,12 @@ jobs:
         echo $ViSP_WS
 
     - name: Build visp_sample with ViSP from build tree
-      if: matrix.build_type == 'visp-dir-build-tree'
       run: |
-        mkdir build && cd build
+        mkdir visp_sample-build && cd visp_sample-build
         cmake .. -DCMAKE_BUILD_TYPE=Release -DVISP_DIR=$ViSP_WS/visp/build
         make -j2
 
     - name: Build visp_sample using visp-config from build tree
-      if: matrix.build_type == 'visp-config-build-tree'
       run: |
         make -f Makefile.visp-config VISP_INSTALL_PREFIX=$ViSP_WS/visp/build
         make -f Makefile.visp-config clean
@@ -75,7 +72,7 @@ jobs:
     - name: Build visp_sample with ViSP from install tree
       if: matrix.build_type == 'visp-dir-install-tree'
       run: |
-        mkdir build && cd build
+        mkdir visp_sample-build_2 && cd visp_sample-build_2
         cmake .. -DCMAKE_BUILD_TYPE=Release -DVISP_DIR=$ViSP_WS/visp/build/install/lib/cmake/visp
         make -j2
 

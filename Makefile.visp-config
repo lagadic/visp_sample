@@ -1,7 +1,6 @@
 CXX            = g++
-VISP_BUILD_DIR = /tmp/usr/local
-VISP_CFLAGS    = `$(VISP_BUILD_DIR)/bin/visp-config --cflags`
-VISP_LDFLAGS   = `$(VISP_BUILD_DIR)/bin/visp-config --libs`
+VISP_CFLAGS    = `$(VISP_INSTALL_PREFIX)/bin/visp-config --cflags`
+VISP_LDFLAGS   = `$(VISP_INSTALL_PREFIX)/bin/visp-config --libs`
 
 SOURCES=$(shell find . -name "sample*.cpp")
 TARGETS=$(SOURCES:%.cpp=%)

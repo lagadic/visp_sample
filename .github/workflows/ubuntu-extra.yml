@@ -70,21 +70,18 @@ jobs:
         make -f Makefile.visp-config clean
 
     - name: Build visp_sample with ViSP from install tree
-      if: matrix.build_type == 'visp-dir-install-tree'
       run: |
         mkdir visp_sample-build_2 && cd visp_sample-build_2
         cmake .. -DCMAKE_BUILD_TYPE=Release -DVISP_DIR=$ViSP_WS/visp/build/install/lib/cmake/visp
         make -j2
 
     - name: Build visp_sample using visp.pc from install tree
-      if: matrix.build_type == 'visp.pc-install-tree'
       run: |
         export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$ViSP_WS/visp/build/install/lib/pkgconfig
         make -f Makefile.visp.pc
         make -f Makefile.visp.pc clean
 
     - name: Build visp_sample using visp-config from install tree
-      if: matrix.build_type == 'visp-config-install-tree'
       run: |
         export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$ViSP_WS/visp/build/install/lib/pkgconfig
         make -f Makefile.visp-config VISP_INSTALL_PREFIX=$ViSP_WS/visp/build/install

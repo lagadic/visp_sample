@@ -1,0 +1,94 @@
+name: Ubuntu-extra
+
+# https://www.jeffgeerling.com/blog/2020/running-github-actions-workflow-on-schedule-and-other-events
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 2 * * SUN'
+
+jobs:
+  build-ubuntu-extra:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04]
+        build_type: [visp-dir-build-tree, visp-config-build-tree, visp-dir-install-tree, visp.pc-install-tree, visp-config-install-tree]
+
+    steps:
+    # https://github.com/marketplace/actions/cancel-workflow-action
+    - name: Cancel Previous Runs
+      uses: styfle/cancel-workflow-action@0.5.0
+      with:
+        access_token: ${{ github.token }}
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Print system information
+      run: lscpu
+
+    - name: Print OS information
+      run: lsb_release -a
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update && sudo apt-get install -y libx11-dev libdc1394-22-dev libv4l-dev gfortran liblapack-dev libopenblas-dev libeigen3-dev libopencv-dev libxml2-dev libpcl-dev
+        sudo apt-get update && sudo apt-get install -y libssl-dev libusb-1.0-0-dev pkg-config libgtk-3-dev libglfw3-dev libgl1-mesa-dev libglu1-mesa-dev
+
+    - name: Build librealsense2 from source
+      run: |
+        pwd
+        git clone --depth 1 https://github.com/IntelRealSense/librealsense.git ${HOME}/librealsense
+        cd ${HOME}/librealsense
+        mkdir build && cd build && mkdir install
+        cmake .. -DBUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$(pwd)/install
+        make -j2 install
+        echo "REALSENSE2_DIR=$(pwd)/install" >> $GITHUB_ENV
+        echo $REALSENSE2_DIR
+
+    - name: Build ViSP from source
+      run: |
+        git clone --depth 1 https://github.com/lagadic/visp.git ${HOME}/visp
+        cd ${HOME}/visp
+        mkdir build && cd build && mkdir install
+        cmake .. -DBUILD_DEMOS=OFF -DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF -DBUILD_TUTORIALS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$(pwd)/install
+        cat ViSP-third-party.txt
+        make -j2 install
+        echo "ViSP_WS=${HOME}" >> $GITHUB_ENV
+        echo $ViSP_WS
+
+    - name: Build visp_sample with ViSP from build tree
+      if: matrix.build_type == 'visp-dir-build-tree'
+      run: |
+        mkdir build && cd build
+        cmake .. -DCMAKE_BUILD_TYPE=Release -DVISP_DIR=$ViSP_WS/visp/build
+        make -j2
+
+    - name: Build visp_sample using visp-config from build tree
+      if: matrix.build_type == 'visp-config-build-tree'
+      run: |
+        make -f Makefile.visp-config VISP_INSTALL_PREFIX=$ViSP_WS/visp/build
+        make -f Makefile.visp-config clean
+
+    - name: Build visp_sample with ViSP from install tree
+      if: matrix.build_type == 'visp-dir-install-tree'
+      run: |
+        mkdir build && cd build
+        cmake .. -DCMAKE_BUILD_TYPE=Release -DVISP_DIR=$ViSP_WS/visp/build/install/lib/cmake/visp
+        make -j2
+
+    - name: Build visp_sample using visp.pc from install tree
+      if: matrix.build_type == 'visp.pc-install-tree'
+      run: |
+        export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$ViSP_WS/visp/build/install/lib/pkgconfig
+        make -f Makefile.visp.pc
+        make -f Makefile.visp.pc clean
+
+    - name: Build visp_sample using visp-config from install tree
+      if: matrix.build_type == 'visp-config-install-tree'
+      run: |
+        export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$ViSP_WS/visp/build/install/lib/pkgconfig
+        make -f Makefile.visp-config VISP_INSTALL_PREFIX=$ViSP_WS/visp/build/install
+        make -f Makefile.visp-config clean

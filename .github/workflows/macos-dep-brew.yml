@@ -34,7 +34,7 @@ jobs:
     - name: Install dependencies
       run: |
         brew update && brew upgrade
-        brew install libpng libjpeg libdc1394 lapack openblas eigen opencv librealsense libxml2 pcl visp
+        brew install libpng libjpeg libdc1394 lapack openblas eigen librealsense libxml2 pcl visp
 
     - name: Configure CMake and build visp_sample
       run: |

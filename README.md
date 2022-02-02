@@ -30,13 +30,23 @@ $ make -j4
 $ make -j4 install
 ```
 
+- build `visp_sample` using `cmake`
+
+```
+$ cd $ViSP_WS/visp_sample
+$ mkdir build
+$ cd build
+$ cmake ../ -DVISP_DIR=/tmp/usr/local/lib/
+$ make -j4
+```
+
 - build `visp_sample` using `visp-config`
 
 ```
 $ cd $ViSP_WS/visp_sample
 $ export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/tmp/usr/local/lib/pkgconfig
-$ make -f Makefile.visp-config
-$ make -f Makefile.visp-config clean
+$ make -j4 -f Makefile.visp-config
+$ make -j4 -f Makefile.visp-config clean
 ```
 
 - build `visp_sample` using `visp.pc`
@@ -44,8 +54,8 @@ $ make -f Makefile.visp-config clean
 ```
 $ cd $ViSP_WS/visp_sample
 $ export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/tmp/usr/local/lib/pkgconfig
-$ make -f Makefile.visp.pc
-$ make -f Makefile.visp-config clean
+$ make -j4 -f Makefile.visp.pc
+$ make -j4 -f Makefile.visp.pc clean
 ```
 
 

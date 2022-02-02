@@ -34,7 +34,7 @@ $ cmake ../visp_sample -DVISP_DIR=$ViSP_WS/visp-build
   $ cd $ViSP_WS/visp_sample
   $ mkdir build
   $ cd build
-  $ cmake ../ -DVISP_DIR=/tmp/usr/local/lib/cmake
+  $ cmake ../ -DVISP_DIR=/tmp/usr/local/lib/cmake/visp
   $ make -j4
   ```
 

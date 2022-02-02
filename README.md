@@ -22,40 +22,36 @@ $ cmake ../visp_sample -DVISP_DIR=$ViSP_WS/visp-build
 ## Build visp_sample with ViSP install tree
 
 - build and install ViSP
-
-```
-$ cd $ViSP_WS/visp-build
-$ cmake ../visp -DCMAKE_INSTALL_PREFIX=/tmp/usr/local
-$ make -j4
-$ make -j4 install
-```
+  ```
+  $ cd $ViSP_WS/visp-build
+  $ cmake ../visp -DCMAKE_INSTALL_PREFIX=/tmp/usr/local
+  $ make -j4
+  $ make -j4 install
+  ```
 
 - build `visp_sample` using `cmake`
-
-```
-$ cd $ViSP_WS/visp_sample
-$ mkdir build
-$ cd build
-$ cmake ../ -DVISP_DIR=/tmp/usr/local/lib/cmake
-$ make -j4
-```
+  ```
+  $ cd $ViSP_WS/visp_sample
+  $ mkdir build
+  $ cd build
+  $ cmake ../ -DVISP_DIR=/tmp/usr/local/lib/cmake
+  $ make -j4
+  ```
 
 - build `visp_sample` using `visp-config`
-
-```
-$ cd $ViSP_WS/visp_sample
-$ export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/tmp/usr/local/lib/pkgconfig
-$ make -j4 -f Makefile.visp-config
-$ make -j4 -f Makefile.visp-config clean
-```
+  ```
+  $ cd $ViSP_WS/visp_sample
+  $ export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/tmp/usr/local/lib/pkgconfig
+  $ make -j4 -f Makefile.visp-config
+  $ make -j4 -f Makefile.visp-config clean
+  ```
 
 - build `visp_sample` using `visp.pc`
-
-```
-$ cd $ViSP_WS/visp_sample
-$ export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/tmp/usr/local/lib/pkgconfig
-$ make -j4 -f Makefile.visp.pc
-$ make -j4 -f Makefile.visp.pc clean
-```
+  ```
+  $ cd $ViSP_WS/visp_sample
+  $ export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/tmp/usr/local/lib/pkgconfig
+  $ make -j4 -f Makefile.visp.pc
+  $ make -j4 -f Makefile.visp.pc clean
+  ```
 
 

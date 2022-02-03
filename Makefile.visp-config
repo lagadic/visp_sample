@@ -1,4 +1,4 @@
-CXX            = g++
+#CXX            = g++
 VISP_BUILD_DIR = /tmp/usr/local
 VISP_CFLAGS    = `$(VISP_BUILD_DIR)/bin/visp-config --cflags`
 VISP_LDFLAGS   = `$(VISP_BUILD_DIR)/bin/visp-config --libs`

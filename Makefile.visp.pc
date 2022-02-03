@@ -1,4 +1,4 @@
-CXX            = g++
+#CXX            = g++
 VISP_CFLAGS    = `pkg-config --cflags visp`
 VISP_LDFLAGS   = `pkg-config --libs visp`
 

@@ -5,15 +5,13 @@
 
 int main()
 {
-  vpImage<unsigned char> I(600, 700);
 #ifdef VISP_HAVE_X11
+  vpImage<unsigned char> I(600, 700);
   vpDisplayX display;
   display.init(I, 20, 20, "Track ball...");
-#endif
   vpImagePoint dummy, pos_text, center, pointer, ip1, ip2;
   vpMouseButton::vpMouseButtonType button;
   int radius = 20;
-
 
   vpDisplay::display(I);
   char text[200];
@@ -81,6 +79,7 @@ int main()
     vpDisplay::flush(I);
     vpTime::wait(1);
   }
+#endif
 
   return 0;
 }

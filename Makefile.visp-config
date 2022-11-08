@@ -1,5 +1,5 @@
 #CXX            = g++
-VISP_BUILD_DIR = /tmp/usr/local
+VISP_BUILD_DIR = /Users/fspindle/soft/visp/visp_ws/test-pr/visp-juinria/visp-build
 VISP_CFLAGS    = `$(VISP_BUILD_DIR)/bin/visp-config --cflags`
 VISP_LDFLAGS   = `$(VISP_BUILD_DIR)/bin/visp-config --libs`
 

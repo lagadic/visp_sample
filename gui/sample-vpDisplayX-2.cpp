@@ -14,7 +14,7 @@ int main()
   int radius = 20;
 
   vpDisplay::display(I);
-  char text[200];
+  std::string text;
   bool motion_allowed = false;
   center.set_u( I.getWidth()/2  );
   center.set_v( I.getHeight()/2 );
@@ -25,14 +25,14 @@ int main()
     pos_text.set_u(30);
     pos_text.set_v(30);
     if (motion_allowed)
-      sprintf(text, "A left click to stop target motion...");
+      text = "A left click to stop target motion...";
     else
-      sprintf(text, "A left click to start target motion...");
-    vpDisplay::displayCharString(I, pos_text, text, vpColor::red);
+      text = "A left click to start target motion...";
+    vpDisplay::displayText(I, pos_text, text, vpColor::red);
     pos_text.set_u(30);
     pos_text.set_v(45);
-    sprintf(text, "A right click to quit...");
-    vpDisplay::displayCharString(I, pos_text, text, vpColor::red);
+    text = "A right click to quit...";
+    vpDisplay::displayText(I, pos_text, text, vpColor::red);
 
     if (vpDisplay::getPointerMotionEvent ( I, pointer ) ) {
       if (motion_allowed) {

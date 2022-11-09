@@ -27,8 +27,9 @@ int main()
     for (unsigned int camera=0; camera < ncameras; camera ++) {
       g.setCamera(camera);
       g.acquire(I[camera]);
-      sprintf(filename, "image-cam%d.pgm", camera);
-      vpImageIo::writePGM(I[camera], filename);
+      std::stringstream ss;
+      ss << "image-cam" << camera << ".pgm";
+      vpImageIo::writePGM(I[camera], ss.str());
     }
     delete [] I;
   }

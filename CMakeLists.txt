@@ -1,6 +1,6 @@
-project(visp-sample)
-
 cmake_minimum_required(VERSION 3.0)
+
+project(visp-sample)
 
 #--------------------------------------------------------------------
 # By default set release configuration
@@ -13,7 +13,6 @@ endif()
 # Detect ViSP
 #--------------------------------------------------------------------
 find_package(VISP REQUIRED)
-
 
 #--------------------------------------------------------------------
 # Propagate in subdirs

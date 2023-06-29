@@ -7,7 +7,7 @@
 
 int main()
 {
-#if defined VISP_HAVE_OPENCV
+#if defined(VISP_HAVE_OPENCV) && defined(HAVE_OPENCV_IMGPROC) && defined(HAVE_OPENCV_VIDEO)
   vpMbEdgeKltTracker tracker; // Create an hybrid model based tracker.
   vpImage<unsigned char> I;
   vpHomogeneousMatrix cMo; // Pose used to display the model.
@@ -18,7 +18,7 @@ int main()
 
 #if defined VISP_HAVE_X11
   vpDisplayX display;
-  display.init(I,100,100,"Mb Hybrid Tracker");
+  display.init(I, 100, 100, "Mb Hybrid Tracker");
 #endif
 
 #if defined VISP_HAVE_PUGIXML
@@ -28,14 +28,13 @@ int main()
   // load the 3d model, to read .wrl model coin is required, if coin is not installed .cao file can be used.
   tracker.loadModel("cube.cao");
 
-  while(true){
+  while (true) {
     // acquire a new image
     // Get the pose using any method
     vpDisplay::display(I);
     tracker.display(I, cMo, cam, vpColor::darkRed, 1, true); // Display the model at the computed pose.
     vpDisplay::flush(I);
   }
-
 #endif
 
   return 0;

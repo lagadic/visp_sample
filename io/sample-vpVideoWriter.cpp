@@ -2,6 +2,7 @@
 
 int main()
 {
+#if defined(VISP_HAVE_OPENCV) && defined(HAVE_OPENCV_VIDEOIO) && defined(HAVE_OPENCV_HIGHGUI)
   vpImage<vpRGBa> I;
 
   vpVideoWriter writer;
@@ -10,17 +11,16 @@ int main()
   writer.setFramerate(30);
 
 #if VISP_HAVE_OPENCV_VERSION >= 0x030000
-  writer.setCodec( cv::VideoWriter::fourcc('P','I','M','1') );
-#elif VISP_HAVE_OPENCV_VERSION >= 0x020100
-  writer.setCodec( CV_FOURCC('P','I','M','1') );
+  writer.setCodec(cv::VideoWriter::fourcc('P', 'I', 'M', '1'));
+#else
+  writer.setCodec(CV_FOURCC('P', 'I', 'M', '1'));
 #endif
 
   writer.setFileName("./test.mpeg");
 
   writer.open(I);
 
-  for ( ; ; )
-  {
+  for (; ; ) {
     // Here the code to capture or create an image and store it in I.
 
     // Save the image
@@ -28,6 +28,6 @@ int main()
   }
 
   writer.close();
-
+#endif
   return 0;
 }

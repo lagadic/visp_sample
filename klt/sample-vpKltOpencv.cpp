@@ -16,7 +16,7 @@ int main()
   vpImageConvert::convert(I, Icv);
 
   // Initialise the tracking on the whole image.
-  klt.initTracking(Icv, NULL);
+  klt.initTracking(Icv);
 
   while (true) {
     // Grab a new image and convert it to the OpenCV format.

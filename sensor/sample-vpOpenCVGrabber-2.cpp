@@ -2,18 +2,18 @@
 
 #include <visp3/core/vpConfig.h>
 
-#if defined(VISP_HAVE_OPENCV) && (VISP_HAVE_OPENCV_VERSION < 0x030000)
+#if defined(VISP_HAVE_OPENCV) && defined(HAVE_OPENCV_VIDEOIO) && defined(HAVE_OPENCV_IMGPROC)
 
 #include <visp3/core/vpImage.h>
 #include <visp3/core/vpImageConvert.h>
 #include <visp3/gui/vpDisplayOpenCV.h>
-#include <visp3/sensor/vpOpenCVGrabber.h>
 
+#include <opencv2/videoio.hpp>
 
 // usage: binary <device name>
 // device name: 0 is the default to dial with the first camera,
 //              1 to dial with a second camera attached to the computer
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
   int device = 0;
   if (argc > 1)
@@ -21,32 +21,29 @@ int main(int argc, char** argv)
 
   std::cout << "Use device: " << device << std::endl;
   cv::VideoCapture cap(device); // open the default camera
-  if(!cap.isOpened())  // check if we succeeded
+  if (!cap.isOpened())  // check if we succeeded
     return -1;
   cv::Mat frame;
   cap >> frame; // get a new frame from camera
 
-  IplImage iplimage = frame;
-  std::cout << "Image size: " << iplimage.width << " "
-      << iplimage.height << std::endl;
+  std::cout << "Image size: " << frame.cols << " " << frame.rows << std::endl;
 
   //vpImage<vpRGBa> I; // for color images
   vpImage<unsigned char> I; // for gray images
-  vpImageConvert::convert(&iplimage, I);
+  vpImageConvert::convert(frame, I);
   vpDisplayOpenCV d(I);
 
-  for(;;) {
+  for (;;) {
     cap >> frame; // get a new frame from camera
-    iplimage = frame;
 
     // Convert the image in ViSP format and display it
-    vpImageConvert::convert(&iplimage, I);
+    vpImageConvert::convert(frame, I);
     vpDisplay::display(I);
     vpDisplay::flush(I);
     if (vpDisplay::getClick(I, false)) // a click to exit
       break;
   }
-  // the camera will be deinitialized automatically in VideoCapture destructor
+  // The camera will be disconnected automatically in VideoCapture destructor
   return 0;
 }
 

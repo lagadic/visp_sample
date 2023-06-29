@@ -13,12 +13,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-10.15, macos-11.0]
+        os: [macos-11, macos-12.0]
 
     steps:
     # https://github.com/marketplace/actions/cancel-workflow-action
     - name: Cancel Previous Runs
-      uses: styfle/cancel-workflow-action@0.5.0
+      uses: styfle/cancel-workflow-action@0.9.1
       with:
         access_token: ${{ github.token }}
 
@@ -34,7 +34,7 @@ jobs:
     - name: Install dependencies
       run: |
         brew update && brew upgrade
-        brew install libpng libjpeg libdc1394 lapack openblas eigen librealsense libxml2 pcl visp
+        brew install visp
         brew deps --tree --installed
 
     - name: Configure CMake and build visp_sample

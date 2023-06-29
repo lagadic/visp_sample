@@ -43,7 +43,7 @@ jobs:
         cd ${HOME}/librealsense
         mkdir build && cd build && mkdir install
         cmake .. -DBUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$(pwd)/install
-        make -j2 install
+        make -j$(nproc) install
         echo "REALSENSE2_DIR=$(pwd)/install" >> $GITHUB_ENV
         echo $REALSENSE2_DIR
 
@@ -62,4 +62,4 @@ jobs:
       run: |
         mkdir build && cd build
         cmake .. -DCMAKE_BUILD_TYPE=Release
-        make -j($nproc)
+        make -j$(nproc)

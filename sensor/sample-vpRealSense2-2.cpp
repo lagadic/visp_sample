@@ -1,8 +1,12 @@
 #include <visp3/sensor/vpRealSense2.h>
+#ifdef VISP_HAVE_PCL
 #include <pcl/visualization/cloud_viewer.h>
 #include <pcl/visualization/pcl_visualizer.h>
+#endif
+
 int main()
 {
+#if defined(VISP_HAVE_REALSENSE2) && defined(VISP_HAVE_PCL)
   vpRealSense2 rs;
   rs.open();
   pcl::PointCloud<pcl::PointXYZRGB>::Ptr pointcloud(new pcl::PointCloud<pcl::PointXYZRGB>);
@@ -24,5 +28,6 @@ int main()
     }
     viewer->spinOnce(30);
   }
+#endif
   return 0;
 }

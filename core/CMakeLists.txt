@@ -1,10 +1,6 @@
-project(sample-core)
-
 cmake_minimum_required(VERSION 3.0)
 
-# C++11 is needed for brace-enclosed initializer list in sample-vpVelocityTwistMatrix-3.cpp:9:37
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+project(sample-core)
 
 file(GLOB src_cpp RELATIVE ${CMAKE_CURRENT_LIST_DIR} "*.cpp")
 

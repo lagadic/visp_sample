@@ -1,7 +1,9 @@
 #include <visp3/gui/vpDisplayGDI.h>
 #include <visp3/gui/vpDisplayX.h>
 #include <visp3/sensor/vpRealSense2.h>
+
 int main() {
+#ifdef VISP_HAVE_REALSENSE2
   vpRealSense2 rs;
   rs2::config config;
   config.enable_stream(RS2_STREAM_COLOR, 1920, 1080, RS2_FORMAT_RGBA8, 30);
@@ -27,6 +29,7 @@ int main() {
     if (vpDisplay::getClick(Ic, false) || vpDisplay::getClick(Ii, false))
       break;
   }
+#endif
   return 0;
 }
 

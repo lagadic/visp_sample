@@ -54,7 +54,7 @@ jobs:
         mkdir build && cd build && mkdir install
         cmake .. -DBUILD_DEMOS=OFF -DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF -DBUILD_TUTORIALS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$(pwd)/install
         cat ViSP-third-party.txt
-        make -j2 install
+        make -j$(nproc) install
         echo "VISP_DIR=$(pwd)/install" >> $GITHUB_ENV
         echo $VISP_DIR
 
@@ -62,4 +62,4 @@ jobs:
       run: |
         mkdir build && cd build
         cmake .. -DCMAKE_BUILD_TYPE=Release
-        make -j2
+        make -j($nproc)

@@ -1,8 +1,10 @@
 #include <visp3/gui/vpDisplayGDI.h>
 #include <visp3/gui/vpDisplayX.h>
 #include <visp3/sensor/vpRealSense2.h>
+
 int main()
 {
+#ifdef VISP_HAVE_REALSENSE2
   vpRealSense2 rs;
   rs.open();
   vpImage<unsigned char> I(rs.getIntrinsics(RS2_STREAM_COLOR).height, rs.getIntrinsics(RS2_STREAM_COLOR).width);
@@ -18,6 +20,7 @@ int main()
     if (vpDisplay::getClick(I, false))
       break;
   }
+#endif
   return 0;
 }
 

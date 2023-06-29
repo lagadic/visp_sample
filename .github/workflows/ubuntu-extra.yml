@@ -43,7 +43,7 @@ jobs:
         cd ${HOME}/librealsense
         mkdir build && cd build && mkdir install
         cmake .. -DBUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$(pwd)/install
-        make -j2 install
+        make -j$(nproc) install
         echo "REALSENSE2_DIR=$(pwd)/install" >> $GITHUB_ENV
         echo $REALSENSE2_DIR
 
@@ -54,7 +54,7 @@ jobs:
         mkdir build && cd build && mkdir install
         cmake .. -DBUILD_DEMOS=OFF -DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF -DBUILD_TUTORIALS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$(pwd)/install
         cat ViSP-third-party.txt
-        make -j2 install
+        make -j$(nproc) install
         echo "ViSP_WS=${HOME}" >> $GITHUB_ENV
         echo $ViSP_WS
 
@@ -62,27 +62,27 @@ jobs:
       run: |
         mkdir visp_sample-build && cd visp_sample-build
         cmake .. -DCMAKE_BUILD_TYPE=Release -DVISP_DIR=$ViSP_WS/visp/build
-        make -j2
+        make -j$(nproc)
 
     - name: Build visp_sample using visp-config from build tree
       run: |
         make -f Makefile.visp-config VISP_INSTALL_PREFIX=$ViSP_WS/visp/build
-        make -f Makefile.visp-config clean
+        make -j$(nproc) -f Makefile.visp-config clean
 
     - name: Build visp_sample with ViSP from install tree
       run: |
         mkdir visp_sample-build_2 && cd visp_sample-build_2
         cmake .. -DCMAKE_BUILD_TYPE=Release -DVISP_DIR=$ViSP_WS/visp/build/install/lib/cmake/visp
-        make -j2
+        make -j$(nproc)
 
     - name: Build visp_sample using visp.pc from install tree
       run: |
         export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$ViSP_WS/visp/build/install/lib/pkgconfig
-        make -f Makefile.visp.pc
-        make -f Makefile.visp.pc clean
+        make -j$(nproc) -f Makefile.visp.pc
+        make -j$(nproc) -f Makefile.visp.pc clean
 
     - name: Build visp_sample using visp-config from install tree
       run: |
         export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$ViSP_WS/visp/build/install/lib/pkgconfig
-        make -f Makefile.visp-config VISP_INSTALL_PREFIX=$ViSP_WS/visp/build/install
-        make -f Makefile.visp-config clean
+        make -j$(nproc) -f Makefile.visp-config VISP_INSTALL_PREFIX=$ViSP_WS/visp/build/install
+        make -j$(nproc) -f Makefile.visp-config clean

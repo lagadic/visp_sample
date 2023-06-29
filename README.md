@@ -54,14 +54,15 @@ $ git clone https://github.com/lagadic/visp_sample
 $ mkdir visp_sample-build
 $ cd visp_sample-build
 $ cmake ../visp_sample -DVISP_DIR=$ViSP_WS/visp-build
+$ make -j4
 ```
 
 ### 2.2. Build visp_sample using `visp-config` from build tree
 
 ```
 $ cd $ViSP_WS/visp_sample
-$ make -f Makefile.visp-config VISP_INSTALL_PREFIX=$ViSP_WS/visp-build
-$ make -f Makefile.visp-config clean
+$ make -j4 -f Makefile.visp-config VISP_INSTALL_PREFIX=$ViSP_WS/visp-build
+$ make -j4 -f Makefile.visp-config clean
 ```
 
 ### 2.3. Build visp_sample with ViSP from install tree
@@ -72,6 +73,7 @@ $ git clone https://github.com/lagadic/visp_sample
 $ mkdir visp_sample-build
 $ cd visp_sample-build
 $ cmake ../visp_sample -DVISP_DIR=/tmp/usr/local/lib/cmake/visp
+$ make -j4
 ```
 
 ### 2.4. Build visp_sample using `visp.pc` from install tree
@@ -79,8 +81,8 @@ $ cmake ../visp_sample -DVISP_DIR=/tmp/usr/local/lib/cmake/visp
 ```
 $ cd $ViSP_WS/visp_sample
 $ export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/tmp/usr/local/lib/pkgconfig
-$ make -f Makefile.visp.pc
-$ make -f Makefile.visp.pc clean
+$ make -j4 -f Makefile.visp.pc
+$ make -j4 -f Makefile.visp.pc clean
 ```
 
 ### 2.5. Build visp_sample using `visp-config` from install tree
@@ -88,6 +90,6 @@ $ make -f Makefile.visp.pc clean
 ```
 $ cd $ViSP_WS/visp_sample
 $ export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/tmp/usr/local/lib/pkgconfig
-$ make -f Makefile.visp-config VISP_INSTALL_PREFIX=/tmp/usr/local
-$ make -f Makefile.visp-config clean
+$ make -j4 -f Makefile.visp-config VISP_INSTALL_PREFIX=/tmp/usr/local
+$ make -j4 -f Makefile.visp-config clean
 ```

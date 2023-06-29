@@ -51,7 +51,7 @@ jobs:
     - name: Build and install ViSP
       run: |
         cd ${HOME}/visp/build
-        make -j2 install
+        make -j$(sysctl -n hw.logicalcpu) install
         echo "VISP_DIR=$(pwd)/install" >> $GITHUB_ENV
         echo $VISP_DIR
 
@@ -59,4 +59,4 @@ jobs:
       run: |
         mkdir build && cd build
         cmake .. -DCMAKE_BUILD_TYPE=Release
-        make -j2
+        make -j$(sysctl -n hw.logicalcpu)

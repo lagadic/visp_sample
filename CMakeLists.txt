@@ -1,6 +1,6 @@
-project(visp-sample)
-
 cmake_minimum_required(VERSION 3.0)
+
+project(visp-sample)
 
 #--------------------------------------------------------------------
 # By default set release configuration
@@ -14,7 +14,6 @@ endif()
 #--------------------------------------------------------------------
 find_package(VISP REQUIRED)
 
-
 #--------------------------------------------------------------------
 # Propagate in subdirs
 #--------------------------------------------------------------------
@@ -24,6 +23,7 @@ add_subdirectory(core)
 add_subdirectory(detection)
 add_subdirectory(gui)
 add_subdirectory(io)
+add_subdirectory(json)
 add_subdirectory(klt)
 add_subdirectory(mbt)
 add_subdirectory(me)

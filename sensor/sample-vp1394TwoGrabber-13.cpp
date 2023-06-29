@@ -2,8 +2,9 @@
 
 int main()
 {
+#ifdef VISP_HAVE_DC1394_2
   vpImage<unsigned char> I;
   vp1394TwoGrabber g;
   g >> I;
+#endif
 }
-

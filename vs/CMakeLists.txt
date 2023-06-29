@@ -1,6 +1,6 @@
-project(sample-core)
-
 cmake_minimum_required(VERSION 3.0)
+
+project(sample-core)
 
 file(GLOB src_cpp RELATIVE ${CMAKE_CURRENT_LIST_DIR} "*.cpp")
 

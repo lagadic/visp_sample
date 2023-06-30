@@ -1,4 +1,4 @@
-name: MacOS-dep-sec
+name: MacOS-dep-src
 
 # https://www.jeffgeerling.com/blog/2020/running-github-actions-workflow-on-schedule-and-other-events
 on:
@@ -26,25 +26,29 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Print system information
-      run: sysctl -a | grep machdep.cpu
+      run: |
+        sysctl -a | grep machdep.cpu
+        sysctl -a | grep logical
 
     - name: Print OS information
       run: system_profiler SPSoftwareDataType
 
     - name: Install dependencies
-      run: |
-        brew install libpng libjpeg libdc1394 lapack openblas eigen opencv librealsense libxml2 pcl nlohmann-json
+      run: brew install libpng libjpeg libdc1394 opencv pcl librealsense zbar pkg-config nlohmann-json
 
     # Openblas location is exported explicitly because openblas is keg-only,
     # which means it was not symlinked into /usr/local/.
+    # qt@5 is as a requested dependency for vtk and thus for pcl 1.13.0
+    # qt@5 is keg-only, which means it was not symlinked into /usr/local that's why we need to set Qt5_DIR
     - name: Clone and configure ViSP
       run: |
         git clone --depth 1 https://github.com/lagadic/visp.git ${HOME}/visp
         cd ${HOME}/visp
         export LDFLAGS="-L/usr/local/opt/openblas/lib"
         export CPPFLAGS="-I/usr/local/opt/openblas/include"
+        export Qt5_DIR="$(brew --prefix qt5)/lib/cmake/Qt5"
         mkdir build && cd build
-        cmake .. -DCMAKE_FIND_FRAMEWORK=LAST -DBUILD_DEMOS=OFF -DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF -DBUILD_TUTORIALS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$(pwd)/install
+        cmake .. -DQt5_DIR=$(brew --prefix qt5)/lib/cmake/Qt5 -DBUILD_DEMOS=OFF -DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF -DBUILD_TUTORIALS=OFF -DCMAKE_INSTALL_PREFIX=$(pwd)/install
         cat ViSP-third-party.txt
 
     - name: Build and install ViSP

@@ -21,9 +21,7 @@ int main()
   display.init(I, 100, 100, "Mb Hybrid Tracker");
 #endif
 
-#if defined VISP_HAVE_PUGIXML
   tracker.loadConfigFile("cube.xml"); // Load the configuration of the tracker
-#endif
   tracker.getCameraParameters(cam); // Get the camera parameters used by the tracker (from the configuration file).
   // load the 3d model, to read .wrl model coin is required, if coin is not installed .cao file can be used.
   tracker.loadModel("cube.cao");

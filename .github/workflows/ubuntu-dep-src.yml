@@ -1,0 +1,74 @@
+name: Ubuntu-dep-src
+
+# https://www.jeffgeerling.com/blog/2020/running-github-actions-workflow-on-schedule-and-other-events
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 2 * * SUN'
+
+jobs:
+  build-ubuntu-dep-src:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-20.04, ubuntu-22.04]
+
+    steps:
+    # https://github.com/marketplace/actions/cancel-workflow-action
+    - name: Cancel Previous Runs
+      uses: styfle/cancel-workflow-action@0.5.0
+      with:
+        access_token: ${{ github.token }}
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Print system information
+      run: lscpu
+
+    - name: Print OS information
+      run: lsb_release -a
+
+    - name: Install dependencies for ubuntu 18.04 and 20.04
+      if: matrix.os != 'ubuntu-22.04'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libx11-dev libdc1394-22-dev libv4l-dev liblapack-dev libopenblas-dev libeigen3-dev libopencv-dev libxml2-dev libpcl-dev nlohmann-json3-dev
+        sudo apt-get install -y libssl-dev libusb-1.0-0-dev pkg-config libgtk-3-dev libglfw3-dev libgl1-mesa-dev libglu1-mesa-dev
+
+    - name: Install dependencies for ubuntu 22.04
+      if: matrix.os == 'ubuntu-22.04'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libx11-dev libdc1394-dev libv4l-dev liblapack-dev libopenblas-dev libeigen3-dev libopencv-dev libxml2-dev libpcl-dev nlohmann-json3-dev
+        sudo apt-get install -y libssl-dev libusb-1.0-0-dev pkg-config libgtk-3-dev libglfw3-dev libgl1-mesa-dev libglu1-mesa-dev
+
+    - name: Build librealsense2 from source
+      run: |
+        pwd
+        git clone --depth 1 https://github.com/IntelRealSense/librealsense.git ${HOME}/librealsense
+        cd ${HOME}/librealsense
+        mkdir build && cd build && mkdir install
+        cmake .. -DBUILD_EXAMPLES=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$(pwd)/install
+        make -j$(nproc) install
+        echo "REALSENSE2_DIR=$(pwd)/install" >> $GITHUB_ENV
+        echo $REALSENSE2_DIR
+
+    - name: Build ViSP from source
+      run: |
+        git clone --depth 1 https://github.com/lagadic/visp.git ${HOME}/visp
+        cd ${HOME}/visp
+        mkdir build && cd build && mkdir install
+        cmake .. -DBUILD_DEMOS=OFF -DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF -DBUILD_TUTORIALS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$(pwd)/install
+        cat ViSP-third-party.txt
+        make -j$(nproc) install
+        echo "VISP_DIR=$(pwd)/install" >> $GITHUB_ENV
+        echo $VISP_DIR
+
+    - name: Configure CMake and build visp_sample
+      run: |
+        mkdir build && cd build
+        cmake .. -DCMAKE_BUILD_TYPE=Release
+        make -j$(nproc)

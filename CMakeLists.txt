@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.5)
 
 project(visp-sample)
 
@@ -9,10 +9,22 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build, options are: None Debug Release" FORCE)
 endif()
 
+option(BUILD_TESTS  "Build tests" ON)
+
 #--------------------------------------------------------------------
 # Detect ViSP
 #--------------------------------------------------------------------
 find_package(VISP REQUIRED)
+
+#----------------------------------------------------------------------
+# Enable testing
+#----------------------------------------------------------------------
+if(BUILD_TESTS)
+  enable_testing()
+  mark_as_advanced(DART_ROOT)
+  mark_as_advanced(BUILD_TESTING)
+  include(CTest)
+endif()
 
 #--------------------------------------------------------------------
 # Propagate in subdirs
@@ -34,12 +46,3 @@ add_subdirectory(video)
 add_subdirectory(vision)
 add_subdirectory(visual_features)
 add_subdirectory(vs)
-
-#----------------------------------------------------------------------
-# For Dart server and tests
-# We use CDash set through CTestConfig.cmake file
-# Dashboards are sent to http://cdash.irisa.fr/CDash/index.php?project=ViSP
-#----------------------------------------------------------------------
-enable_testing()
-include(Dart)
-

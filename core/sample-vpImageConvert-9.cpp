@@ -2,9 +2,14 @@
 #include <visp3/core/vpImageConvert.h>
 #include <visp3/io/vpImageIo.h>
 
+
+#if defined(HAVE_OPENCV_IMGCODECS)
+#include <opencv2/imgcodecs.hpp>
+#endif
+
 int main()
 {
-#if defined(VISP_HAVE_OPENCV) && (VISP_HAVE_OPENCV_VERSION >= 0x020100)
+#if defined(VISP_HAVE_OPENCV) && (VISP_HAVE_OPENCV_VERSION >= 0x020100) && defined(HAVE_OPENCV_IMGCODECS)
   vpImage<vpRGBa> Ic; // A color image
   cv::Mat Ip;
 

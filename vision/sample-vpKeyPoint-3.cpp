@@ -3,7 +3,7 @@
 
 int main()
 {
-#if (VISP_HAVE_OPENCV_VERSION >= 0x020300)
+#if defined(VISP_HAVE_OPENCV) && defined(HAVE_OPENCV_IMGPROC) && defined(HAVE_OPENCV_FEATURES2D)
   vpImage<unsigned char> Irefrence;
   vpImage<unsigned char> Icurrent;
 

@@ -6,7 +6,8 @@ int main()
   std::string filename = "me.json";
   {
     vpMe me;
-    me.setThreshold(10000);
+    me.setLikelihoodThresholdType(vpMe::NORMALIZED_THRESHOLD);
+    me.setThreshold(20);
     me.setMaskNumber(180);
     me.setMaskSign(0);
     me.setMu1(0.5);

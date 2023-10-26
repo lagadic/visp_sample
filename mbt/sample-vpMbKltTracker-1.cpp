@@ -6,7 +6,7 @@
 
 int main()
 {
-#if defined(VISP_HAVE_MODULE_KLT) && (defined(VISP_HAVE_OPENCV) && (VISP_HAVE_OPENCV_VERSION >= 0x020100))
+#if defined(VISP_HAVE_OPENCV) && defined(HAVE_OPENCV_IMGPROC) && defined(HAVE_OPENCV_VIDEO)
   vpMbKltTracker tracker; // Create a model based tracker via Klt Points.
   vpImage<unsigned char> I;
   vpHomogeneousMatrix cMo; // Pose used in entry (has to be defined), then computed using the tracker.
@@ -18,7 +18,7 @@ int main()
   tracker.loadModel("cube.cao"); // load the 3d model, to read .wrl model coi is required, if coin is not installed .cao file can be used.
   tracker.initFromPose(I, cMo); // initialise the tracker with the given pose.
 
-  while(true){
+  while (true) {
     // acquire a new image
     tracker.track(I); // track the object on this image
     tracker.getPose(cMo); // get the pose

@@ -20,7 +20,7 @@ int main()
   d = new vpDisplayGDI;
 #elif defined(VISP_HAVE_D3D9)
   d = new vpDisplayD3D;
-#elif defined(VISP_HAVE_OPENCV)
+#elif defined(HAVE_OPENCV_HIGHGUI)
   d = new vpDisplayOpenCV;
 #else
   std::cout << "Sorry, no video device is available" << std::endl;
@@ -52,11 +52,11 @@ int main()
     event = vpDisplay::getKeyboardEvent(I, &key[0], false);
     if (event) {
       std::cout << "Key detected: " << key << std::endl;
-      cpt_event ++;
+      cpt_event++;
     }
 
     vpTime::wait(5); // wait 5 ms
-  } while(cpt_event < 5);
+  } while (cpt_event < 5);
 
 #ifdef VISP_HAVE_DISPLAY
   delete d;

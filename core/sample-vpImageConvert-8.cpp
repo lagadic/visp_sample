@@ -8,7 +8,7 @@
 
 int main()
 {
-#if defined(VISP_HAVE_OPENCV) && (VISP_HAVE_OPENCV_VERSION >= 0x020100) && defined(HAVE_OPENCV_IMGCODECS)
+#if defined(VISP_HAVE_OPENCV) && defined(HAVE_OPENCV_IMGPROC) && defined(HAVE_OPENCV_IMGCODECS)
   vpImage<unsigned char> Ig; // A grayscale image
   cv::Mat Ip;
 

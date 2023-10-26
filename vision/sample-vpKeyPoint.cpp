@@ -3,8 +3,9 @@
 #include <visp3/io/vpImageIo.h>
 #include <visp3/vision/vpKeyPoint.h>
 
-#if (VISP_HAVE_OPENCV_VERSION >= 0x020101)
-int main() {
+#if defined(VISP_HAVE_OPENCV) && defined(HAVE_OPENCV_IMGPROC) && defined(HAVE_OPENCV_FEATURES2D)
+int main()
+{
   //Test Matching side by side
   vpImage<unsigned char> IRef, I, IMatching;
   vpImageIo::read(IRef, "box.png");
@@ -15,7 +16,7 @@ int main() {
   //Hamming distance must be used with ORB
   const std::string matcherName = "BruteForce-Hamming";
   vpKeyPoint::vpFilterMatchingType filterType =
-      vpKeyPoint::ratioDistanceThreshold;
+    vpKeyPoint::ratioDistanceThreshold;
 
   vpKeyPoint keypoint(detectorName, extractorName, matcherName, filterType);
 
@@ -46,7 +47,8 @@ int main() {
   return 0;
 }
 #else
-int main() {
+int main()
+{
   return 0;
 }
 #endif

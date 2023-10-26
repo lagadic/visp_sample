@@ -4,7 +4,7 @@
 
 int main()
 {
-#if (VISP_HAVE_OPENCV_VERSION >= 0x020300)
+#if defined(VISP_HAVE_OPENCV) && defined(HAVE_OPENCV_IMGPROC) && defined(HAVE_OPENCV_FEATURES2D)
   vpImage<unsigned char> Ireference;
   vpImage<unsigned char> Icurrent;
 
@@ -16,8 +16,7 @@ int main()
 
   //Select a part of the image by clincking on two points which define a rectangle
   vpImagePoint corners[2];
-  for (int i=0 ; i < 2 ; i++)
-  {
+  for (int i = 0; i < 2; i++) {
     vpDisplay::getClick(Ireference, corners[i]);
   }
 
@@ -31,8 +30,7 @@ int main()
   //Then grab another image which represents the current image Icurrent
 
   //Select a part of the image by clincking on two points which define a rectangle
-  for (int i=0 ; i < 2 ; i++)
-  {
+  for (int i = 0; i < 2; i++) {
     vpDisplay::getClick(Icurrent, corners[i]);
   }
 

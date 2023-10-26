@@ -5,8 +5,9 @@
 #include <visp3/vision/vpHomography.h>
 #include <visp3/core/vpCameraParameters.h>
 
-#if (VISP_HAVE_OPENCV_VERSION >= 0x020101)
-int main() {
+#if defined(VISP_HAVE_OPENCV) && defined(HAVE_OPENCV_IMGPROC) && defined(HAVE_OPENCV_FEATURES2D)
+int main()
+{
   vpImage<unsigned char> IRef, I, IMatching;
   vpImageIo::read(IRef, "box.png");
   vpImageIo::read(I, "box_in_scene.png");
@@ -16,7 +17,7 @@ int main() {
   //Hamming distance must be used with ORB
   const std::string matcherName = "BruteForce-Hamming";
   vpKeyPoint::vpFilterMatchingType filterType =
-      vpKeyPoint::ratioDistanceThreshold;
+    vpKeyPoint::ratioDistanceThreshold;
 
   vpKeyPoint keypoint(detectorName, extractorName, matcherName, filterType);
   keypoint.setMatchingRatioThreshold(0.8);
@@ -43,7 +44,7 @@ int main() {
   vpDisplay::display(IMatching);
 
   //Compute a Ransac homography to find the box
-  vpCameraParameters cam(600, 600, I.getWidth()/2, I.getHeight()/2);
+  vpCameraParameters cam(600, 600, I.getWidth() / 2, I.getHeight() / 2);
   vpHomography H;
 
   //List of keypoints coordinates in normalized camera frame in reference image
@@ -64,12 +65,12 @@ int main() {
   double residual;
   //At least 50% of the matched points must have a positive vote to consider
   //the solution picked valid
-  unsigned int nb_inliers_consensus = (unsigned int) mPref_x.size() / 2;
+  unsigned int nb_inliers_consensus = (unsigned int)mPref_x.size() / 2;
   //Maximum error (in meter) allowed to consider a point as an inlier
   double ransac_threshold = 2.0 / cam.get_px();
   vpHomography::ransac(mPref_x, mPref_y, mPcur_x, mPcur_y, H, inliers,
-      residual, nb_inliers_consensus, ransac_threshold,
-      true);
+    residual, nb_inliers_consensus, ransac_threshold,
+    true);
 
 
   //Defines the 4 corners of the box in the reference and the current images
@@ -101,7 +102,8 @@ int main() {
   return 0;
 }
 #else
-int main() {
+int main()
+{
   return 0;
 }
 #endif

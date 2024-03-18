@@ -6,7 +6,7 @@
 #include <visp3/core/vpMomentAlpha.h>
 
 //generic function for printing
-void print (double i) { std::cout << i << "\t";}
+void print(double i) { std::cout << i << "\t"; }
 
 int main()
 {
@@ -23,7 +23,7 @@ int main()
 
   //////////////////////////////REFERENCE VALUES////////////////////////////////
   vpMomentObject objRef(3);                      // Reference object. Must be of order 3 because we will
-                                                 // need the 3rd order centered moments
+  // need the 3rd order centered moments
 
   objRef.setType(vpMomentObject::DENSE_POLYGON); // Object is the inner part of a polygon
   objRef.fromVector(vec_p);                      // Init the dense object with the polygon
@@ -44,11 +44,18 @@ int main()
   alphaRef.compute();                            // Compute alpha AFTER centered moments.
 
   // The order of values in the vector must be as follows: mu30 mu21 mu12 mu03
-  std::vector<double> mu3ref = {mcRef.get(3,0), mcRef.get(2,1), mcRef.get(1,2), mcRef.get(0,3)};
-
+#if (VISP_CXX_STANDARD >= VISP_CXX_STANDARD_11)
+  std::vector<double> mu3ref = { mcRef.get(3,0), mcRef.get(2,1), mcRef.get(1,2), mcRef.get(0,3) };
+#else
+  std::vector<double> mu3ref;
+  mu3ref.push_back(mcRef.get(3, 0));
+  mu3ref.push_back(mcRef.get(2, 1));
+  mu3ref.push_back(mcRef.get(1, 2));
+  mu3ref.push_back(mcRef.get(0, 3));
+#endif
   std::cout << "--- Reference object ---" << std::endl;
   std::cout << "alphaRef=" << vpMath::deg(alphaRef.get()) << " deg" << std::endl << "mu3="; // print reference alpha
-  std::for_each (mu3ref.begin(), mu3ref.end(), print);
+  std::for_each(mu3ref.begin(), mu3ref.end(), print);
   std::cout << std::endl;
 
   ////////////CURRENT VALUES (same object rotated 180deg - must be
@@ -65,7 +72,7 @@ int main()
   vec_p.push_back(p);
 
   vpMomentObject obj(3);                         // Second object. Order 3 is also required because of the Alpha
-                                                 // will compare third-order centered moments to given reference.
+  // will compare third-order centered moments to given reference.
 
   obj.setType(vpMomentObject::DENSE_POLYGON);    // Object is the inner part of a polygon
   obj.fromVector(vec_p);                         // Init the dense object with the polygon

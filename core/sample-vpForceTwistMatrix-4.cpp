@@ -2,6 +2,7 @@
 
 int main()
 {
+#if (VISP_CXX_STANDARD >= VISP_CXX_STANDARD_11)
   {
     vpTranslationVector stp(0.1, 0.2, 0.3);
     vpRotationMatrix sRp({ 0,  0, -1,
@@ -17,4 +18,5 @@ int main()
     vpForceTwistMatrix sFp(sRp);
     std::cout << "sFp:\n" << sFp << std::endl;
   }
+#endif
 }

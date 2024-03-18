@@ -4,6 +4,7 @@
 
 int main()
 {
+#if defined(VISP_HAVE_MODULE_GUI) && defined(VISP_HAVE_THREADS)
   vpSimulatorViper850 robot;
 
   vpColVector q(6);
@@ -17,6 +18,6 @@ int main()
 
   // Moves the robot in the joint space
   robot.setPosition(vpRobot::ARTICULAR_FRAME, q);
-
+#endif
   return 0;
 }

@@ -4,6 +4,7 @@
 
 int main()
 {
+#if defined(VISP_HAVE_MODULE_GUI) && defined(VISP_HAVE_THREADS)
   vpSimulatorViper850 robot;
 
   vpColVector qvel(6);
@@ -11,14 +12,14 @@ int main()
   qvel[0] = 0.1;             // Joint 1 velocity in rad/s
   qvel[1] = vpMath::rad(15); // Joint 2 velocity in rad/s
   qvel[2] = 0;               // Joint 3 velocity in rad/s
-  qvel[3] = M_PI/8;          // Joint 4 velocity in rad/s
+  qvel[3] = M_PI / 8;          // Joint 4 velocity in rad/s
   qvel[4] = 0;               // Joint 5 velocity in rad/s
   qvel[5] = 0;               // Joint 6 velocity in rad/s
 
   // Initialize the controller to position control
   robot.setRobotState(vpRobot::STATE_VELOCITY_CONTROL);
 
-  for ( ; ; ) {
+  for (; ; ) {
     // Apply a velocity in the joint space
     robot.setVelocity(vpRobot::ARTICULAR_FRAME, qvel);
 
@@ -27,6 +28,6 @@ int main()
 
   // Stop the robot
   robot.setRobotState(vpRobot::STATE_STOP);
-
+#endif
   return 0;
 }

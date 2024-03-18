@@ -1,6 +1,8 @@
 #include <visp3/vision/vpPoseFeatures.h>
 #include <iostream>
 
+
+#if (VISP_CXX_STANDARD >= VISP_CXX_STANDARD_11)
 class vp_createClass{
 public:
   vp_createClass(){}
@@ -19,9 +21,11 @@ public:
     vpFeatureBuilder::create(fp,l);
   }
 };
+#endif
 
 int main()
 {
+#if (VISP_CXX_STANDARD >= VISP_CXX_STANDARD_11)
   vpPoseFeatures pose;
 
   vpPoint pts[3];
@@ -37,13 +41,11 @@ int main()
   void (vp_createClass::*ptrClassTwoPoint)(vpFeaturePoint&, const vpPoint&, const vpPoint&) = &vp_createClass::vp_createTwoPoint;
   void (vp_createClass::*ptrClassLine)(vpFeatureLine &, const vpLine &) = &vp_createClass::vp_createLine;
 
-#ifdef VISP_HAVE_CPP11_COMPATIBILITY
   pose.addSpecificFeature(&cpClass, ptrClassPoint, fp, pts[0]);
   pose.addSpecificFeature(&cpClass, ptrClassTwoPoint, fp, pts[1], pts[2]);
   pose.addSpecificFeature(&cpClass, ptrClassLine, fl, line);
-#endif
 
   //... Pose Computation
-
+#endif
   return 0;
 }

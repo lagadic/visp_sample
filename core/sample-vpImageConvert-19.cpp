@@ -2,6 +2,7 @@
 #include <visp3/core/vpImageConvert.h>
 #include <visp3/core/vpImageTools.h>
 #include <visp3/gui/vpDisplayX.h>
+#include <visp3/gui/vpDisplayGDI.h>
 
 int main()
 {
@@ -38,9 +39,15 @@ int main()
   vpImage<vpRGBa> I_segmented(height, width);
   vpImageTools::inMask(I, mask, I_segmented);
 
+#if defined(VISP_HAVE_X11)
   vpDisplayX d_I(I, 0, 0, "Current frame");
   vpDisplayX d_mask(mask, I.getWidth()+75, 0, "HSV mask");
   vpDisplayX d_I_segmented(I_segmented, 2*mask.getWidth()+80, 0, "Segmented frame");
+#elif defined(VISP_HAVE_GDI)
+  vpDisplayGDI d_I(I, 0, 0, "Current frame");
+  vpDisplayGDI d_mask(mask, I.getWidth()+75, 0, "HSV mask");
+  vpDisplayGDI d_I_segmented(I_segmented, 2*mask.getWidth()+80, 0, "Segmented frame");
+#endif
 
   vpDisplay::display(I);
   vpDisplay::display(mask);

@@ -2,6 +2,10 @@
 
 #include <visp3/robot/vpRobot.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   vpColVector v(6);
@@ -13,9 +17,9 @@ int main()
   v[5] = vpMath::rad(20);
 
   vpColVector v_max(6);
-  for (int i=0; i<3; i++)
+  for (int i = 0; i<3; i++)
     v_max[i] = 0.3;
-  for (int i=3; i<6; i++)
+  for (int i = 3; i<6; i++)
     v_max[i] = vpMath::rad(10);
 
   vpColVector v_sat = vpRobot::saturateVelocities(v, v_max, true);

@@ -1,12 +1,16 @@
 #include <visp3/core/vpColVector.h>
 #include <visp3/core/vpMatrix.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
-  vpMatrix A(4,4);
+  vpMatrix A(4, 4);
 
-  for(unsigned int i=0; i < A.getRows(); i++)
-    for(unsigned int j=0; j < A.getCols(); j++)
+  for (unsigned int i = 0; i < A.getRows(); i++)
+    for (unsigned int j = 0; j < A.getCols(); j++)
       A[i][j] = i*A.getCols()+j;
 
   A.print(std::cout, 4);

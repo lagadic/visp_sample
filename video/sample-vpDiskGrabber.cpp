@@ -1,6 +1,10 @@
 #include <visp3/core/vpImage.h>
 #include <visp3/io/vpDiskGrabber.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   try {
@@ -25,16 +29,15 @@ int main()
     g.setExtension("pgm");
 
     // Open the framegrabber by loading the first image of the sequence
-    g.open(I) ;
+    g.open(I);
 
     unsigned int cpt = 1;
     // this is the loop over the image sequence
-    while(cpt ++ < 10)
-      {
+    while (cpt++ < 10) {
   // read the image and then increment the image counter so that the next
   // call to acquire(I) will get the next image
-  g.acquire(I) ;
-      }
+      g.acquire(I);
+    }
   }
-  catch(...) {}
+  catch (...) { }
 }

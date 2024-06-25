@@ -4,6 +4,10 @@
 #include <visp3/gui/vpDisplayOpenCV.h>
 #include <visp3/sensor/vp1394CMUGrabber.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
 #if defined(VISP_HAVE_CMU1394)
@@ -18,13 +22,12 @@ int main()
   vpDisplayOpenCV d(I);
   vpDisplay::display(I);
 
-  for(;;)
-  {
+  for (;;) {
     g.acquire(I);
     vpDisplay::display(I);
     vpDisplay::flush(I);
     if (vpDisplay::getClick(I, false)) // a click to exit
-        break;
+      break;
   }
 
   g.close();

@@ -3,6 +3,10 @@
 #include <visp3/io/vpImageIo.h>
 #include <visp3/sensor/vpFlyCaptureGrabber.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
 #if defined(VISP_HAVE_FLYCAPTURE)
@@ -57,11 +61,10 @@ int main()
   g.getCameraInfo(std::cout);
   g.open(I);
 
-  for(int i=0; i< nframes; i++) {
+  for (int i = 0; i< nframes; i++) {
     g.acquire(I);
     sprintf(filename, "image%04d.pgm", i);
     vpImageIo::write(I, filename);
   }
 #endif
 }
-

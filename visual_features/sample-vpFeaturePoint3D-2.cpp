@@ -3,6 +3,10 @@
 #include <visp3/core/vpHomogeneousMatrix.h>
 #include <visp3/vs/vpServo.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   vpServo task; // Visual servoing task

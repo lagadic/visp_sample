@@ -1,8 +1,12 @@
 #include <visp3/core/vpMatrix.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
-  vpMatrix M(3,2);
+  vpMatrix M(3, 2);
   M[0][0] = 1;   M[0][1] = 6;
   M[1][0] = 2;   M[1][1] = 8;
   M[2][0] = 0.5; M[2][1] = 9;
@@ -16,7 +20,7 @@ int main()
   Sigma.diag(w);
 
   // Reconstruct the initial matrix using the decomposition
-  vpMatrix Mrec =  U * Sigma * V.t();
+  vpMatrix Mrec = U * Sigma * V.t();
 
   // Here, Mrec is obtained equal to the initial value of M
   // Mrec[0][0] = 1;   Mrec[0][1] = 6;

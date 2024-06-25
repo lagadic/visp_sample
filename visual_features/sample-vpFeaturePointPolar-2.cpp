@@ -1,6 +1,10 @@
 #include <visp3/visual_features/vpFeaturePointPolar.h>
 #include <visp3/core/vpMatrix.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   // Creation of the current feature s

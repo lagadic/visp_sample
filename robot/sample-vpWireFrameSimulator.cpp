@@ -1,6 +1,10 @@
 #include <visp3/core/vpImage.h>
 #include <visp3/robot/vpWireFrameSimulator.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   vpWireFrameSimulator sim;

@@ -1,6 +1,10 @@
 #include <iostream>
 #include <visp3/sensor/vpScanPoint.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   vpScanPoint p;
@@ -12,4 +16,3 @@ int main()
 
   std::cout << p << std::endl;
 }
-

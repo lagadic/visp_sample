@@ -1,6 +1,10 @@
 #include <iostream>
 #include <visp3/core/vpClient.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   std::string servername = "localhost";
@@ -12,16 +16,15 @@ int main()
 
   int val = 0;
 
-  while(1)
-  {
+  while (1) {
     // Sending the new value to the first client
-    if(client.send(&val) != sizeof(int))
+    if (client.send(&val) != sizeof(int))
       std::cout << "Error while sending" << std::endl;
     else
       std::cout << "Sending : " << val << std::endl;
 
     // Receiving a value from the first client
-    if(client.receive(&val) != sizeof(int))
+    if (client.receive(&val) != sizeof(int))
       std::cout << "Error while receiving" << std::endl;
     else
       std::cout << "Received : " << val << std::endl;

@@ -1,6 +1,10 @@
 #include <visp3/io/vpImageIo.h>
 #include <visp3/mbt/vpMbEdgeTracker.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   vpImage<unsigned char> I;
@@ -10,14 +14,14 @@ int main()
 
   std::string object = "my-object";
   vpMbEdgeTracker tracker;
-  tracker.loadConfigFile( object+".xml" );
-  tracker.loadModel( object+".cao" );
+  tracker.loadConfigFile(object+".xml");
+  tracker.loadModel(object+".cao");
 
   tracker.setLod(true);
   tracker.setMinLineLengthThresh(20.);
   tracker.setMinPolygonAreaThresh(20.*20.);
 
-  tracker.initClick(I, object+".init" );
+  tracker.initClick(I, object+".init");
 
   while (true) {
     // tracking loop

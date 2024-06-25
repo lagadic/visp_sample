@@ -47,12 +47,16 @@
 #include <visp3/sensor/vpForceTorqueIitSensor.h>
 #include <visp3/core/vpTime.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
 #ifdef VISP_HAVE_FT_IIT_SDK
   vpForceTorqueIitSensor iit_ft;
 
-  if ( ! iit_ft.connected() ) {
+  if (!iit_ft.connected()) {
     std::cout << "Unable to connect to IIT force-torque sensor" << std::endl;
     return EXIT_SUCCESS;
   }
@@ -60,7 +64,7 @@ int main()
   iit_ft.bias();
   iit_ft.startStreaming();
   vpColVector ft;
-  for(int i=0; i < 10; i++) {
+  for (int i = 0; i < 10; i++) {
     ft = iit_ft.getForceTorque();
     std::cout << ft.t() << std::endl;
     vpTime::sleepMs(1000);

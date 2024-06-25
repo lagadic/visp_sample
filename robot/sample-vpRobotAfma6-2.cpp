@@ -2,6 +2,10 @@
 #include <visp3/core/vpPoseVector.h>
 #include <visp3/robot/vpRobotException.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
 #ifdef VISP_HAVE_AFMA6

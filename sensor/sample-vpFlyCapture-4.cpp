@@ -1,6 +1,10 @@
 #include <visp3/core/vpImage.h>
 #include <visp3/sensor/vpFlyCaptureGrabber.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
 #if defined(VISP_HAVE_FLYCAPTURE)
@@ -16,9 +20,8 @@ int main()
     g.setVideoModeAndFrameRate(FlyCapture2::VIDEOMODE_1280x960Y8, FlyCapture2::FRAMERATE_60);
   g.startCapture();
 
-  for(int i=0; i< nframes; i++) {
+  for (int i = 0; i< nframes; i++) {
     g.acquire(I);
   }
 #endif
 }
-

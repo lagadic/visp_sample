@@ -2,6 +2,10 @@
 #include <visp3/gui/vpDisplayX.h>
 #include <visp3/sensor/vp1394TwoGrabber.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
 #if defined(VISP_HAVE_DC1394_2)
@@ -30,11 +34,11 @@ int main()
   std::list<vpDot2>::iterator it;
   blob.searchDotsInArea(I, 0, 0, I.getWidth(), I.getHeight(), auto_detected_blob_list);
 
-  while(1) {
+  while (1) {
     g.acquire(I); // Acquire an image
     vpDisplay::display(I);
 
-    for(it=auto_detected_blob_list.begin(); it != auto_detected_blob_list.end(); ++it) {
+    for (it = auto_detected_blob_list.begin(); it != auto_detected_blob_list.end(); ++it) {
       (*it).setGraphics(true);
       (*it).track(I);
     }

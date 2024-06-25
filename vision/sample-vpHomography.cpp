@@ -3,15 +3,19 @@
 #include <visp3/core/vpMath.h>
 #include <visp3/core/vpMeterPixelConversion.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   // Initialize in the object frame the coordinates in meters of 4 points that
   // belong to a planar object
   vpPoint Po[4];
   Po[0].setWorldCoordinates(-0.1, -0.1, 0);
-  Po[1].setWorldCoordinates( 0.2, -0.1, 0);
-  Po[2].setWorldCoordinates( 0.1,  0.1, 0);
-  Po[3].setWorldCoordinates(-0.1,  0.3, 0);
+  Po[1].setWorldCoordinates(0.2, -0.1, 0);
+  Po[2].setWorldCoordinates(0.1, 0.1, 0);
+  Po[3].setWorldCoordinates(-0.1, 0.3, 0);
 
   // Initialize the pose between camera frame a and object frame o
   vpHomogeneousMatrix aMo(0, 0, 1, 0, 0, 0); // Camera is 1 meter far
@@ -31,7 +35,7 @@ int main()
   // camera frame a
   vpPoint Pa[4];
   std::vector<double> xa(4), ya(4); // Coordinates in pixels of the points in frame a
-  for(int i=0 ; i < 4 ; i++) {
+  for (int i = 0; i < 4; i++) {
     Pa[i] = Po[i];
     Pa[i].project(aMo); // Project the points from object frame to
       // camera frame a
@@ -42,7 +46,7 @@ int main()
   // camera frame b
   vpPoint Pb[4];
   std::vector<double> xb(4), yb(4); // Coordinates in pixels of the points in frame b
-  for(int i=0 ; i < 4 ; i++) {
+  for (int i = 0; i < 4; i++) {
     Pb[i] = Po[i];
     Pb[i].project(bMo); // Project the points from object frame to
             // camera frame a
@@ -59,7 +63,7 @@ int main()
   // Compute the coordinates of the points in frame b using the ground
   // truth homography and the coordinates of the points in frame a
   vpHomography bHa = aHb.inverse();
-  for(int i = 0; i < 4 ; i++){
+  for (int i = 0; i < 4; i++) {
     double inv_z = 1. / (bHa[2][0] * xa[i] + bHa[2][1] * ya[i] + bHa[2][2]);
 
     xb[i] = (bHa[0][0] * xa[i] + bHa[0][1] * ya[i] + bHa[0][2]) * inv_z;

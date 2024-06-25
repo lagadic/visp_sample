@@ -2,6 +2,10 @@
 #include <visp3/gui/vpDisplayX.h>
 #include <visp3/sensor/vp1394TwoGrabber.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
 #if defined(VISP_HAVE_DC1394)
@@ -19,7 +23,7 @@ int main()
   blob.initTracking(I);
   blob.setGraphics(true);
 
-  while(1) {
+  while (1) {
     g.acquire(I); // Acquire an image
     vpDisplay::display(I);
     blob.track(I);

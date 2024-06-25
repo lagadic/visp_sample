@@ -4,6 +4,10 @@
 #include <visp3/io/vpImageIo.h>
 #include <visp3/mbt/vpMbEdgeTracker.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   vpMbEdgeTracker tracker; // Create a model based tracker.
@@ -18,7 +22,7 @@ int main()
   tracker.loadModel("cube.cao");
   tracker.initFromPose(I, cMo); // initialize the tracker with the given pose.
 
-  while(true){
+  while (true) {
     // acquire a new image
     tracker.track(I); // track the object on this image
     tracker.getPose(cMo); // get the pose

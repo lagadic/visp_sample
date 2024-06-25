@@ -3,6 +3,10 @@
 #include <visp3/core/vpRotationMatrix.h>
 #include <visp3/core/vpRxyzVector.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   vpRxyzVector rxyz;

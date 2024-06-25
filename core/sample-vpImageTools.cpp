@@ -2,6 +2,10 @@
 #include <visp3/core/vpImage.h>
 #include <visp3/io/vpImageIo.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   vpImage<unsigned char> I;
@@ -21,4 +25,3 @@ int main()
 
   vpImageIo::write(I, "Klimt.pgm"); // Write the image in a PGM P5 image file format
 }
-

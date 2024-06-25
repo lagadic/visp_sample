@@ -1,17 +1,24 @@
 #include <visp3/vision/vpPoseFeatures.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 #if (VISP_CXX_STANDARD >= VISP_CXX_STANDARD_11)
-void vp_createPoint(vpFeaturePoint &fp,const vpPoint &p){
-  vpFeatureBuilder::create(fp,p);
+void vp_createPoint(vpFeaturePoint &fp, const vpPoint &p)
+{
+  vpFeatureBuilder::create(fp, p);
 }
 
-void vp_createTwoPoint(vpFeaturePoint &fp,const vpPoint &p, const vpPoint&p2){
-  vpFeatureBuilder::create(fp,p);
-  vpFeatureBuilder::create(fp,p2);
+void vp_createTwoPoint(vpFeaturePoint &fp, const vpPoint &p, const vpPoint &p2)
+{
+  vpFeatureBuilder::create(fp, p);
+  vpFeatureBuilder::create(fp, p2);
 }
 
-void vp_createLine(vpFeatureLine &fp,const vpLine &l){
-  vpFeatureBuilder::create(fp,l);
+void vp_createLine(vpFeatureLine &fp, const vpLine &l)
+{
+  vpFeatureBuilder::create(fp, l);
 }
 #endif
 
@@ -27,7 +34,7 @@ int main()
 
   vpFeaturePoint fp;
   vpFeatureLine fl;
-  void (*ptr)(vpFeaturePoint&, const vpPoint&) = &vpFeatureBuilder::create;
+  void (*ptr)(vpFeaturePoint &, const vpPoint &) = &vpFeatureBuilder::create;
 
   pose.addSpecificFeature(ptr, fp, pts[0]);
   pose.addSpecificFeature(&vp_createPoint, fp, pts[1]);

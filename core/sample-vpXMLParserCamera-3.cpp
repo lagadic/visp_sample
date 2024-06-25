@@ -2,9 +2,13 @@
 #include <visp3/core/vpXmlParserCamera.h>
 #include <visp3/core/vpTime.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
-  vpCameraParameters cam; 
+  vpCameraParameters cam;
   std::stringstream ss_additional_info;
   ss_additional_info << "<date>" << vpTime::getDateTime() << "</date>";
 

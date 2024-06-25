@@ -1,5 +1,9 @@
 #include <visp3/core/vpTranslationVector.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   {
@@ -14,7 +18,7 @@ int main()
   {
 #ifdef VISP_HAVE_CXX11
     vpTranslationVector t;
-    t = {0, 0.1, 0.5};
+    t = { 0, 0.1, 0.5 };
     std::cout << "t (m):\n" << t << std::endl;
 #endif
   }

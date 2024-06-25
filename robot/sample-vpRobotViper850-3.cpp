@@ -3,6 +3,10 @@
 #include <visp3/sensor/vp1394TwoGrabber.h>
 #include <visp3/core/vpCameraParameters.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
 #if defined(VISP_HAVE_VIPER850) && defined(VISP_HAVE_DC1394_2)

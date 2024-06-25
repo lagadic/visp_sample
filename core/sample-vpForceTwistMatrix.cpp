@@ -1,6 +1,10 @@
 #include <visp3/core/vpColVector.h>
 #include <visp3/core/vpForceTwistMatrix.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   vpForceTwistMatrix sFp; // Twist transformation matrix from sensor to probe frame

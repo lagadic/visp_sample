@@ -1,5 +1,9 @@
 #include <visp3/core/vpIoTools.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   std::string tmp_path = vpIoTools::getTempPath();

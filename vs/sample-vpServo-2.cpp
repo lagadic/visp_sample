@@ -1,6 +1,10 @@
 #include <visp3/visual_features/vpFeaturePoint.h>
 #include <visp3/vs/vpServo.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   vpServo servo;
@@ -15,11 +19,11 @@ int main()
   dof[5] = 0; // turn off wz
   servo.setCameraDoF(dof);
 
-  while(1) {
+  while (1) {
     // vpFeatureBuilder::create(s, ...);       // update current feature
-    
+
     vpColVector v = servo.computeControlLaw(); // compute control law
-    // only v[3] and v[4] corresponding to wx and wy are different from 0 
+    // only v[3] and v[4] corresponding to wx and wy are different from 0
   }
 
   servo.kill();

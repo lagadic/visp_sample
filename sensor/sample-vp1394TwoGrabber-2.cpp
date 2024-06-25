@@ -2,6 +2,10 @@
 #include <visp3/io/vpImageIo.h>
 #include <visp3/sensor/vp1394TwoGrabber.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
 #if defined(VISP_HAVE_DC1394_2)
@@ -12,7 +16,7 @@ int main()
     ncameras = g.getNumCameras();
 
     // Create an image container for each camera
-    vpImage<unsigned char> *I = new vpImage<unsigned char> [ncameras];
+    vpImage<unsigned char> *I = new vpImage<unsigned char>[ncameras];
     char filename[FILENAME_MAX];
 
     // If the first camera supports vpVIDEO_MODE_640x480_YUV422 video mode
@@ -24,15 +28,15 @@ int main()
     g.setFramerate(vp1394TwoGrabber::vpFRAMERATE_30);
 
     // Acquire an image from each camera
-    for (unsigned int camera=0; camera < ncameras; camera ++) {
+    for (unsigned int camera = 0; camera < ncameras; camera++) {
       g.setCamera(camera);
       g.acquire(I[camera]);
       std::stringstream ss;
       ss << "image-cam" << camera << ".pgm";
       vpImageIo::writePGM(I[camera], ss.str());
     }
-    delete [] I;
+    delete[] I;
   }
-  catch(...) {}
+  catch (...) { }
 #endif
 }

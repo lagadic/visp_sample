@@ -2,6 +2,10 @@
 #include <visp3/sensor/vp1394TwoGrabber.h>
 #include <visp3/robot/vpRingLight.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
 #if defined(VISP_HAVE_PARPORT) && defined(VISP_HAVE_DC1394_2)
@@ -10,7 +14,7 @@ int main()
 
   vpRingLight light; // Open the device to access to the ring light.
 
-  for (int i=0; i < 10; i++) {
+  for (int i = 0; i < 10; i++) {
     light.pulse(); // Send a pulse to the lighting system
     g.acquire(I); // Acquire an image
   }

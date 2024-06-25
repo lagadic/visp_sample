@@ -8,6 +8,10 @@
 #include <visp3/gui/vpDisplayGDI.h>
 #include <visp3/core/vpMath.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   int niter = 1000000;
@@ -27,13 +31,13 @@ int main()
     vpDisplay::flush(I);
 
     t1 = vpTime::measureTimeMicros();
-    for(int n=0; n < niter; n ++) {
-      double i=n%200, j=n%200;
+    for (int n = 0; n < niter; n++) {
+      double i = n%200, j = n%200;
       vpDisplay::displayPoint(I, vpMath::round(i), vpMath::round(j), vpColor::red);
     }
     t2 = vpTime::measureTimeMicros();
     std::cout << "Duree alloc 2 doubles*" << niter << " + display*" << niter << ": "
-        << t2-t1 << "us" << std::endl;
+      << t2-t1 << "us" << std::endl;
     vpDisplay::flush(I);
     //    vpDisplay::getClick(I);
   }
@@ -45,13 +49,13 @@ int main()
 
     double i, j;
     t1 = vpTime::measureTimeMicros();
-    for(int n=0; n < niter; n ++) {
-      i=n%200, j=n%200;
+    for (int n = 0; n < niter; n++) {
+      i = n%200, j = n%200;
       vpDisplay::displayPoint(I, vpMath::round(i), vpMath::round(j), vpColor::red);
     }
     t2 = vpTime::measureTimeMicros();
     std::cout << "Duree alloc 2 doubles + display*" << niter << ": "
-        << t2-t1 << "us" << std::endl;
+      << t2-t1 << "us" << std::endl;
     vpDisplay::flush(I);
     //    vpDisplay::getClick(I);
   }
@@ -62,15 +66,15 @@ int main()
     vpDisplay::flush(I);
 
     t1 = vpTime::measureTimeMicros();
-    for(int n=0; n < niter; n ++) {
+    for (int n = 0; n < niter; n++) {
       vpImagePoint ip;
-      ip.set_i( n%200 );
-      ip.set_j( n%200 );
+      ip.set_i(n%200);
+      ip.set_j(n%200);
       vpDisplay::displayPoint(I, ip, vpColor::red);
     }
     t2 = vpTime::measureTimeMicros();
     std::cout << "Duree alloc vpImagePoint* " << niter << " + display*" << niter << ": "
-        << t2-t1 << "us" << std::endl;
+      << t2-t1 << "us" << std::endl;
     vpDisplay::flush(I);
     //    vpDisplay::getClick(I);
   }
@@ -82,14 +86,14 @@ int main()
 
     t1 = vpTime::measureTimeMicros();
     vpImagePoint ip;
-    for(int n=0; n < niter; n ++) {
-      ip.set_i( n%200 );
-      ip.set_j( n%200 );
+    for (int n = 0; n < niter; n++) {
+      ip.set_i(n%200);
+      ip.set_j(n%200);
       vpDisplay::displayPoint(I, ip, vpColor::red);
     }
     t2 = vpTime::measureTimeMicros();
     std::cout << "Duree alloc 1 vpImagePoint + display*" << niter << ": "
-        << t2-t1 << "us" << std::endl;
+      << t2-t1 << "us" << std::endl;
     vpDisplay::flush(I);
     //    vpDisplay::getClick(I);
   }

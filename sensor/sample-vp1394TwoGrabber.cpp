@@ -3,6 +3,10 @@
 #include <visp3/sensor/vp1394TwoGrabber.h>
 #include <visp3/core/vpException.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
 #if defined(VISP_HAVE_DC1394_2)
@@ -16,6 +20,6 @@ int main()
     g.acquire(I);                        // Acquire an image
     vpImageIo::writePGM(I, "image.pgm"); // Write image on the disk
   }
-  catch(...) {}
+  catch (...) { }
 #endif
 }

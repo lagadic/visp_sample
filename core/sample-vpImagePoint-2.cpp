@@ -1,6 +1,10 @@
 #include <iostream>
 #include <visp3/core/vpImagePoint.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   vpImagePoint ip(100, 200); // Create an image point with coordinates i=100, j=200

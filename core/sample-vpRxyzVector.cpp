@@ -8,15 +8,15 @@ int main()
   vpRxyzVector rxyz;
 
   // Initialise the Euler angles
-  rxyz[0] = vpMath::rad( 45.f); // phi   angle in rad around x axis
+  rxyz[0] = vpMath::rad(45.f); // phi   angle in rad around x axis
   rxyz[1] = vpMath::rad(-30.f); // theta angle in rad around y axis
-  rxyz[2] = vpMath::rad( 90.f); // psi   angle in rad around z axis
+  rxyz[2] = vpMath::rad(90.f); // psi   angle in rad around z axis
 
   // Construct a rotation matrix from the Euler angles
   vpRotationMatrix R(rxyz);
 
   // Extract the Euler angles around x,y,z axis from a rotation matrix
-  rxyz.buildFrom(R);
+  rxyz.build(R);
 
   // Print the extracted Euler angles. Values are the same than the
   // one used for initialization

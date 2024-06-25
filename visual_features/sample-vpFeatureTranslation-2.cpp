@@ -9,11 +9,11 @@ int main()
 
   // Creation of the current feature s
   vpFeatureTranslation s(vpFeatureTranslation::cdMc);
-  s.buildFrom(cdMc); // Initialization of the feature
+  s.build(cdMc); // Initialization of the feature
 
-  // Creation of the desired feature s*. By default this feature is 
+  // Creation of the desired feature s*. By default this feature is
   // initialized to zero
-  vpFeatureTranslation s_star(vpFeatureTranslation::cdMc); 
+  vpFeatureTranslation s_star(vpFeatureTranslation::cdMc);
 
   // Compute the interaction matrix for the translation feature
   vpMatrix L = s.interaction();

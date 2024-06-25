@@ -8,7 +8,7 @@ int main()
   vpHomogeneousMatrix fMc; // Fix to camera frame transformation
   // ... fMc need here to be initialized
 
-  fVc.buildFrom(fMc);
+  fVc.build(fMc);
 
   vpColVector c_v(6); // Velocity in the camera frame: vx,vy,vz,wx,wy,wz
   // ... c_v should here have an initial value

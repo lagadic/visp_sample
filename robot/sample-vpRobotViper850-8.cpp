@@ -1,6 +1,10 @@
 #include <visp3/robot/vpRobotViper850.h>
 #include <visp3/core/vpColVector.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
 #ifdef VISP_HAVE_VIPER850
@@ -25,10 +29,10 @@ int main()
   robot.getVelocity(vpRobot::ARTICULAR_FRAME, q_dot_mes); // q_dot_mes =0
   // q_dot_mes is resized to 6, the number of joint
 
-  for ( ; ; ) {
-     q_dot_mes = robot.getVelocity(vpRobot::ARTICULAR_FRAME);
-     vpTime::wait(40); // wait 40 ms
-     // here q_dot_mes is equal to [0.1, 0.2, 0.3, M_PI/8, M_PI/4, M_PI/16]
+  for (; ; ) {
+    q_dot_mes = robot.getVelocity(vpRobot::ARTICULAR_FRAME);
+    vpTime::wait(40); // wait 40 ms
+    // here q_dot_mes is equal to [0.1, 0.2, 0.3, M_PI/8, M_PI/4, M_PI/16]
   }
 #endif
 }

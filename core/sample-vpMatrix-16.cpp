@@ -1,5 +1,9 @@
 #include <visp3/core/vpMatrix.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
 #if 0
@@ -47,7 +51,7 @@ int main()
 
   // Reconstruct matrix A from ImA, ImAt, KerAt
   vpMatrix S(rank, A.getCols());
-  for(unsigned int i = 0; i< rank; i++)
+  for (unsigned int i = 0; i< rank; i++)
     S[i][i] = sv[i];
   vpMatrix Vt(A.getCols(), A.getCols());
   Vt.insert(imAt.t(), 0, 0);

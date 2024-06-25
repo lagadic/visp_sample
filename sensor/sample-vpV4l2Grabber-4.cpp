@@ -2,6 +2,10 @@
 #include <visp3/io/vpImageIo.h>
 #include <visp3/gui/vpDisplayX.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
 #if defined(VISP_HAVE_V4L2) && defined(VISP_HAVE_X11)
@@ -23,7 +27,7 @@ int main()
   bool first = true;
   while (1) {
     g.acquire(I, roi);
-    if(first) {
+    if (first) {
       d = new vpDisplayX(I);
       first = false;
     }
@@ -36,4 +40,3 @@ int main()
   delete d;
 #endif
 }
-

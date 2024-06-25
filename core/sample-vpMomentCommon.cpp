@@ -4,6 +4,10 @@
 #include <visp3/core/vpMomentCommon.h>
 #include <iostream>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   // Define two discrete points
@@ -20,22 +24,23 @@ int main()
   vec_p.push_back(p);
 
   vpMomentObject obj(5); // Object initialized up to order 5 to handle
-			 // all computations required by vpMomentCInvariant
+       // all computations required by vpMomentCInvariant
   obj.setType(vpMomentObject::DENSE_POLYGON); // object is the inner part of a polygon
   obj.fromVector(vec_p); // Init the discrete object with two points
 
   //initialisation with default values
-  vpMomentCommon db(vpMomentCommon::getSurface(obj),vpMomentCommon::getMu3(obj),vpMomentCommon::getAlpha(obj),1.);  
-  bool success;  
-  
+  vpMomentCommon db(vpMomentCommon::getSurface(obj), vpMomentCommon::getMu3(obj), vpMomentCommon::getAlpha(obj), 1.);
+  bool success;
+
   db.updateAll(obj); // Update AND compute all moments
-  
+
   //get C-invariant
-  const vpMomentCInvariant& C = static_cast<const vpMomentCInvariant&>(db.get("vpMomentCInvariant",success));
-  if(success){
-      std::cout << C.get(0) << std:: endl;
-  }else
-      std::cout << "vpMomentCInvariant not found." << std::endl; 
-  
+  const vpMomentCInvariant &C = static_cast<const vpMomentCInvariant &>(db.get("vpMomentCInvariant", success));
+  if (success) {
+    std::cout << C.get(0) << std::endl;
+  }
+  else
+    std::cout << "vpMomentCInvariant not found." << std::endl;
+
   return 0;
 }

@@ -1,6 +1,10 @@
 #include <visp3/io/vpImageIo.h>
 #include <visp3/gui/vpDisplayGTK.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
 #if defined(VISP_HAVE_GTK)
@@ -44,7 +48,7 @@ int main()
   std::cout << "Check keyboard events..." << std::endl;
   char key[10];
   bool ret;
-  for (int i=0; i< 200; i++) {
+  for (int i = 0; i< 200; i++) {
     bool ret = vpDisplay::getKeyboardEvent(I, key, false);
     if (ret)
       std::cout << "keyboard event: key: " << "\"" << key << "\"" << std::endl;

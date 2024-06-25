@@ -2,6 +2,10 @@
 #include <visp3/core/vpColVector.h>
 #include <visp3/core/vpVelocityTwistMatrix.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   vpColVector q_vel(6); // Joint velocity on the 6 joints

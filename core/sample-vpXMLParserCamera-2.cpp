@@ -1,6 +1,10 @@
 #include <visp3/core/vpCameraParameters.h>
 #include <visp3/core/vpXmlParserCamera.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   // Create a camera parameter container. We want to set these parameters

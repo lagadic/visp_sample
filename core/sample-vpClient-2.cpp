@@ -15,6 +15,9 @@
 #include <visp3/core/vpRequest.h>
 #include <string.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
 class vpRequestImage : public vpRequest
 {
 private:
@@ -34,18 +37,21 @@ public:
 /* begin vpRequestImage.cpp */
 //#include "vpRequestImage.h"
 
-vpRequestImage::vpRequestImage(){
+vpRequestImage::vpRequestImage()
+{
   request_id = "image";
 }
 
-vpRequestImage::vpRequestImage(vpImage<unsigned char> *Im){
+vpRequestImage::vpRequestImage(vpImage<unsigned char> *Im)
+{
   request_id = "image";
   I = Im;
 }
 
-vpRequestImage::~vpRequestImage(){}
+vpRequestImage::~vpRequestImage() { }
 
-void vpRequestImage::encode(){
+void vpRequestImage::encode()
+{
   clear();
 
   unsigned int h = I->getHeight();
@@ -53,17 +59,18 @@ void vpRequestImage::encode(){
 
   addParameterObject(&h);
   addParameterObject(&w);
-  addParameterObject(I->bitmap,h*w*sizeof(unsigned char));
+  addParameterObject(I->bitmap, h*w*sizeof(unsigned char));
 }
 
-void vpRequestImage::decode(){
-  if(listOfParams.size() == 3){
+void vpRequestImage::decode()
+{
+  if (listOfParams.size() == 3) {
     unsigned int w, h;
-    memcpy((void*)&h, (void*)listOfParams[0].c_str(), sizeof(unsigned int));
-    memcpy((void*)&w, (void*)listOfParams[1].c_str(), sizeof(unsigned int));
+    memcpy((void *)&h, (void *)listOfParams[0].c_str(), sizeof(unsigned int));
+    memcpy((void *)&w, (void *)listOfParams[1].c_str(), sizeof(unsigned int));
 
-    I->resize(h,w);
-    memcpy((void*)I->bitmap,(void*)listOfParams[2].c_str(),w*h*sizeof(unsigned char));
+    I->resize(h, w);
+    memcpy((void *)I->bitmap, (void *)listOfParams[2].c_str(), w*h*sizeof(unsigned char));
   }
 }
 
@@ -97,8 +104,7 @@ int main(int argc, char **argv)
 
   vpRequestImage reqImage(&I);
 
-  while(1)
-  {
+  while (1) {
     double t = vpTime::measureTimeMs();
     // Acquire a new image
     g.acquire(I);
@@ -109,7 +115,7 @@ int main(int argc, char **argv)
     client.sendAndEncodeRequest(reqImage);
 
     // A click in the viewer to exit
-    if ( vpDisplay::getClick(I, false) )
+    if (vpDisplay::getClick(I, false))
       break;
   }
 

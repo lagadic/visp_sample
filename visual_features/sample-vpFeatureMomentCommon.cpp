@@ -7,6 +7,10 @@
 #include <iostream>
 #include <vector>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
     // Define source polygon
@@ -50,24 +54,24 @@ int main()
 
 
   //init classic moment primitives (for source)
-  vpMomentCommon mdb_src(vpMomentCommon::getSurface(dst),vpMomentCommon::getMu3(dst),vpMomentCommon::getAlpha(dst),1.);
+  vpMomentCommon mdb_src(vpMomentCommon::getSurface(dst), vpMomentCommon::getMu3(dst), vpMomentCommon::getAlpha(dst), 1.);
   //Init classic features
   vpFeatureMomentCommon fmdb_src(mdb_src);
 
   ////init classic moment primitives (for destination)
-  vpMomentCommon mdb_dst(vpMomentCommon::getSurface(dst),vpMomentCommon::getMu3(dst),vpMomentCommon::getAlpha(dst),1.);
+  vpMomentCommon mdb_dst(vpMomentCommon::getSurface(dst), vpMomentCommon::getMu3(dst), vpMomentCommon::getAlpha(dst), 1.);
   //Init classic features
   vpFeatureMomentCommon fmdb_dst(mdb_dst);
 
   //update+compute moment primitives from object (for source)
   mdb_src.updateAll(src);
   //update+compute features (+interaction matrixes) from plane
-  fmdb_src.updateAll(0.,0.,1.);
+  fmdb_src.updateAll(0., 0., 1.);
 
   //update+compute moment primitives from object (for destination)
   mdb_dst.updateAll(dst);
   //update+compute features (+interaction matrixes) from plane
-  fmdb_dst.updateAll(0.,0.,1.);
+  fmdb_dst.updateAll(0., 0., 1.);
 
   //define visual servoing task
   vpServo task;
@@ -77,15 +81,15 @@ int main()
   //Add all classic features to the task
   //In this example, source and destination features are translated by 0.1
   //will produce a movement of 0.1 on x-axis.
-  task.addFeature(fmdb_src.getFeatureGravityNormalized(),fmdb_dst.getFeatureGravityNormalized());
-  task.addFeature(fmdb_src.getFeatureAn(),fmdb_dst.getFeatureAn());
+  task.addFeature(fmdb_src.getFeatureGravityNormalized(), fmdb_dst.getFeatureGravityNormalized());
+  task.addFeature(fmdb_src.getFeatureAn(), fmdb_dst.getFeatureAn());
   //the object is NOT symmetric
   //select C4 and C6
-  task.addFeature(fmdb_src.getFeatureCInvariant(),fmdb_dst.getFeatureCInvariant(),(1 << 3) | (1 << 5));
-  task.addFeature(fmdb_src.getFeatureAlpha(),fmdb_dst.getFeatureAlpha());
+  task.addFeature(fmdb_src.getFeatureCInvariant(), fmdb_dst.getFeatureCInvariant(), (1 << 3) | (1 << 5));
+  task.addFeature(fmdb_src.getFeatureAlpha(), fmdb_dst.getFeatureAlpha());
 
-  task.setLambda(1) ;
-  vpColVector v = task.computeControlLaw() ;
+  task.setLambda(1);
+  vpColVector v = task.computeControlLaw();
 
   task.print();
 

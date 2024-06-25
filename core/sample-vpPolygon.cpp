@@ -2,15 +2,19 @@
 
 #include <visp3/core/vpPolygon.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   std::vector<vpImagePoint> corners;
 
   // Initialize the corners vector with 4 points
-  corners.push_back( vpImagePoint( 50, 100) );
-  corners.push_back( vpImagePoint( 50, 300) );
-  corners.push_back( vpImagePoint(200, 300) );
-  corners.push_back( vpImagePoint(200, 100) );
+  corners.push_back(vpImagePoint(50, 100));
+  corners.push_back(vpImagePoint(50, 300));
+  corners.push_back(vpImagePoint(200, 300));
+  corners.push_back(vpImagePoint(200, 100));
 
   // Initialize a polygon with the corners
   vpPolygon polygon(corners);
@@ -25,7 +29,7 @@ int main()
 
   // Check if a point is inside the polygon
   vpImagePoint ip(550, 200);
-  std::cout << "The point " << ip << " is " << (polygon.isInside(ip) ? "inside":"outside") << " the polygon" << std::endl;
+  std::cout << "The point " << ip << " is " << (polygon.isInside(ip) ? "inside" : "outside") << " the polygon" << std::endl;
 
   return 0;
 }

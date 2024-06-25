@@ -1,6 +1,10 @@
 #include <visp3/io/vpImageIo.h>
 #include <visp3/gui/vpDisplayGTK.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
 #ifdef VISP_HAVE_GTK
@@ -23,11 +27,11 @@ int main()
   vpDisplay::flush(I);
 
   // Updates the color image with the original loaded image and the overlay
-  vpDisplay::getImage(I, Ioverlay) ;
+  vpDisplay::getImage(I, Ioverlay);
 
   // Write the color image on the disk
   std::string ofilename("overlay.ppm");
-  vpImageIo::writePPM(Ioverlay, ofilename) ;
+  vpImageIo::writePPM(Ioverlay, ofilename);
 
   // Wait for a click in the display window
   vpDisplay::getClick(I);

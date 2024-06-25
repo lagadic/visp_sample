@@ -1,6 +1,10 @@
 #include <visp3/io/vpImageIo.h>
 #include <visp3/core/vpImageConvert.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   vpImage<vpRGBa> I;

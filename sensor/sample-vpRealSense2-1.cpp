@@ -2,6 +2,10 @@
 #include <visp3/gui/vpDisplayX.h>
 #include <visp3/sensor/vpRealSense2.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
 #ifdef VISP_HAVE_REALSENSE2
@@ -23,4 +27,3 @@ int main()
 #endif
   return 0;
 }
-

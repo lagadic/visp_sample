@@ -2,6 +2,10 @@
 #include <visp3/core/vpColVector.h>
 #include <visp3/core/vpTime.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
 #ifdef VISP_HAVE_VIPER850
@@ -12,8 +16,8 @@ int main()
   // Bias the force/torque sensor
   robot.biasForceTorqueSensor();
 
-  for (int i=0; i< 10; i++) {
-    robot.getForceTorque(H) ;
+  for (int i = 0; i< 10; i++) {
+    robot.getForceTorque(H);
     std::cout << "Measured force/torque: " << H.t() << std::endl;
     vpTime::wait(5);
   }

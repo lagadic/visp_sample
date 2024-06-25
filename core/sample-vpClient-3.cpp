@@ -15,6 +15,9 @@
 #include <visp3/core/vpRequest.h>
 #include <string.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
 class vpRequestVector : public vpRequest
 {
 private:
@@ -34,33 +37,37 @@ public:
 /* begin vpRequestImage.cpp */
 //#include "vpRequestImage.h"
 
-vpRequestVector::vpRequestVector(){
+vpRequestVector::vpRequestVector()
+{
   request_id = "vector";
 }
 
-vpRequestVector::vpRequestVector(vpColVector *v){
+vpRequestVector::vpRequestVector(vpColVector *v)
+{
   request_id = "vector";
   vec = v;
 }
 
-vpRequestVector::~vpRequestVector(){}
+vpRequestVector::~vpRequestVector() { }
 
-void vpRequestVector::encode(){
+void vpRequestVector::encode()
+{
   clear();
 
   unsigned int size = vec->getRows();
 
   addParameterObject(&size);
-  addParameterObject(vec->data,size*sizeof(double));
+  addParameterObject(vec->data, size*sizeof(double));
 }
 
-void vpRequestVector::decode(){
-  if(listOfParams.size() == 1){
+void vpRequestVector::decode()
+{
+  if (listOfParams.size() == 1) {
     unsigned int size;
-    memcpy((void*)&size, (void*)listOfParams[0].c_str(), sizeof(unsigned int));
+    memcpy((void *)&size, (void *)listOfParams[0].c_str(), sizeof(unsigned int));
 
     vec->resize(size);
-    memcpy((void*)vec->data,(void*)listOfParams[1].c_str(),size*sizeof(double));
+    memcpy((void *)vec->data, (void *)listOfParams[1].c_str(), size*sizeof(double));
   }
 }
 
@@ -80,8 +87,7 @@ int main()
 
   vpRequestVector reqVector(&vec);
 
-  while(1)
-  {
+  while (1) {
     double t = vpTime::measureTimeMs();
     client.sendAndEncodeRequest(reqVector);
   }

@@ -1,5 +1,9 @@
 #include <visp3/core/vpThetaUVector.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   {
@@ -14,7 +18,7 @@ int main()
   {
 #ifdef VISP_HAVE_CXX11
     vpThetaUVector tu;
-    tu = {M_PI, M_PI_2, M_PI_4};
+    tu = { M_PI, M_PI_2, M_PI_4 };
     std::cout << "tu (rad):\n" << tu << std::endl;
 #endif
   }

@@ -66,7 +66,8 @@
 #ifdef VISP_HAVE_PCL
 #ifdef USE_THREAD
 // Shared vars
-typedef enum {
+typedef enum
+{
   capture_waiting,
   capture_started,
   capture_stopped
@@ -75,17 +76,21 @@ t_CaptureState s_capture_state = capture_waiting;
 vpMutex s_mutex_capture;
 
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 vpThread::Return displayPointcloudFunction(vpThread::Args args)
 {
   pcl::PointCloud<pcl::PointXYZRGB>::Ptr pointcloud_ = *((pcl::PointCloud<pcl::PointXYZRGB>::Ptr *) args);
 
-  pcl::visualization::PCLVisualizer::Ptr viewer (new pcl::visualization::PCLVisualizer ("3D Viewer"));
+  pcl::visualization::PCLVisualizer::Ptr viewer(new pcl::visualization::PCLVisualizer("3D Viewer"));
   pcl::visualization::PointCloudColorHandlerRGBField<pcl::PointXYZRGB> rgb(pointcloud_);
-  viewer->setBackgroundColor (0, 0, 0);
-  viewer->addCoordinateSystem (1.0);
-  viewer->initCameraParameters ();
+  viewer->setBackgroundColor(0, 0, 0);
+  viewer->addCoordinateSystem(1.0);
+  viewer->initCameraParameters();
   viewer->setPosition(640+80, 480+80);
-  viewer->setCameraPosition(0,0,-0.5, 0,-1,0);
+  viewer->setCameraPosition(0, 0, -0.5, 0, -1, 0);
 
   t_CaptureState capture_state_;
 
@@ -96,18 +101,18 @@ vpThread::Return displayPointcloudFunction(vpThread::Args args)
 
     static bool update = false;
     if (capture_state_ == capture_started) {
-      if (! update) {
-        viewer->addPointCloud<pcl::PointXYZRGB> (pointcloud_, rgb, "sample cloud");
-        viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "sample cloud");
+      if (!update) {
+        viewer->addPointCloud<pcl::PointXYZRGB>(pointcloud_, rgb, "sample cloud");
+        viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "sample cloud");
         update = true;
       }
       else {
-        viewer->updatePointCloud<pcl::PointXYZRGB> (pointcloud_, rgb, "sample cloud");
+        viewer->updatePointCloud<pcl::PointXYZRGB>(pointcloud_, rgb, "sample cloud");
       }
 
-      viewer->spinOnce (10);
+      viewer->spinOnce(10);
     }
-  } while(capture_state_ != capture_stopped);
+  } while (capture_state_ != capture_stopped);
 
   std::cout << "End of point cloud display thread" << std::endl;
   return 0;
@@ -143,12 +148,12 @@ int main()
 #ifdef USE_THREAD
     vpThread thread_display_pointcloud(displayPointcloudFunction, (vpThread::Args)&pointcloud);
 #else
-    pcl::visualization::PCLVisualizer::Ptr viewer (new pcl::visualization::PCLVisualizer ("3D Viewer"));
+    pcl::visualization::PCLVisualizer::Ptr viewer(new pcl::visualization::PCLVisualizer("3D Viewer"));
     pcl::visualization::PointCloudColorHandlerRGBField<pcl::PointXYZRGB> rgb(pointcloud);
-    viewer->setBackgroundColor (0, 0, 0);
-    viewer->addCoordinateSystem (1.0);
-    viewer->initCameraParameters ();
-    viewer->setCameraPosition(0,0,-0.5, 0,-1,0);
+    viewer->setBackgroundColor(0, 0, 0);
+    viewer->addCoordinateSystem(1.0);
+    viewer->initCameraParameters();
+    viewer->setCameraPosition(0, 0, -0.5, 0, -1, 0);
 #endif
 
 #else
@@ -167,7 +172,7 @@ int main()
     std::cout << "No image viewer is available..." << std::endl;
 #endif
 
-    while(1) {
+    while (1) {
       double t = vpTime::measureTimeMs();
       rs.acquire(color, infrared, depth, pointcloud);
 
@@ -179,17 +184,17 @@ int main()
       }
 #else
       static bool update = false;
-        if (! update) {
-          viewer->addPointCloud<pcl::PointXYZRGB> (pointcloud, rgb, "sample cloud");
-          viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "sample cloud");
-          viewer->setPosition(color.getWidth()+80, color.getHeight()+80);
-          update = true;
-        }
-        else {
-          viewer->updatePointCloud<pcl::PointXYZRGB> (pointcloud, rgb, "sample cloud");
-        }
+      if (!update) {
+        viewer->addPointCloud<pcl::PointXYZRGB>(pointcloud, rgb, "sample cloud");
+        viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "sample cloud");
+        viewer->setPosition(color.getWidth()+80, color.getHeight()+80);
+        update = true;
+      }
+      else {
+        viewer->updatePointCloud<pcl::PointXYZRGB>(pointcloud, rgb, "sample cloud");
+      }
 
-        viewer->spinOnce (10);
+      viewer->spinOnce(10);
 #endif
 #endif
 
@@ -224,13 +229,13 @@ int main()
 
     rs.close();
   }
-  catch(const vpException &e) {
+  catch (const vpException &e) {
     std::cerr << "RealSense error " << e.getStringMessage() << std::endl;
   }
-  catch(const rs::error & e)  {
+  catch (const rs::error &e) {
     std::cerr << "RealSense error calling " << e.get_failed_function() << "(" << e.get_failed_args() << "): " << e.what() << std::endl;
   }
-  catch(const std::exception & e) {
+  catch (const std::exception &e) {
     std::cerr << e.what() << std::endl;
   }
 
@@ -239,4 +244,3 @@ int main()
 #endif
   return 0;
 }
-

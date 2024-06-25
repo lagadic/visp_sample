@@ -1,5 +1,9 @@
 #include <visp3/core/vpVelocityTwistMatrix.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
 #if (VISP_CXX_STANDARD >= VISP_CXX_STANDARD_11)

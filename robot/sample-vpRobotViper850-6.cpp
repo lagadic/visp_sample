@@ -2,6 +2,10 @@
 #include <visp3/core/vpColVector.h>
 #include <visp3/core/vpMath.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
 #ifdef VISP_HAVE_VIPER850
@@ -19,7 +23,7 @@ int main()
   // Initialize the controller to position control
   robot.setRobotState(vpRobot::STATE_VELOCITY_CONTROL);
 
-  for ( ; ; ) {
+  for (; ; ) {
     // Apply a velocity in the joint space
     robot.setVelocity(vpRobot::ARTICULAR_FRAME, qvel);
 

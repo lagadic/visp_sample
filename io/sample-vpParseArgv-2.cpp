@@ -6,9 +6,13 @@
 // List of allowed command line options
 #define GETOPTARGS	"bi:l:f:d:h" // double point mean here that the preceding option request an argument
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 // Usage : [-b] [-i <integer value>] [-l <long value>]
 //         [-f <float value>] [-d <double value>] [-s <string value>] [-h]
-int main(int argc, const char ** argv)
+int main(int argc, const char **argv)
 {
   // Variables to set by command line parsing
   bool   b_val = false;

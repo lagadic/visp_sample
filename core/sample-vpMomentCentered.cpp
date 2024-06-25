@@ -4,12 +4,16 @@
 #include <visp3/core/vpMomentDatabase.h>
 #include <visp3/core/vpMomentCentered.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   vpPoint p;
   std::vector<vpPoint> vec_p;
 
-  p.set_x(1); p.set_y(1); // coordinates in meters in the image plane 
+  p.set_x(1); p.set_y(1); // coordinates in meters in the image plane
   vec_p.push_back(p);
   p.set_x(2); p.set_y(2); // coordinates in meters in the image plane
 
@@ -32,9 +36,9 @@ int main()
   mc.compute(); //compute centered moments AFTER gravity center
 
   double m12;
-  m12 = mc.get()[2*(obj.getOrder()+1)+1]; // i=1 and j=2  
-  std::cout << m12 << std::endl;  
-  m12 = mc.get(1,2); // the same
-  std::cout << m12 << std::endl;  
+  m12 = mc.get()[2*(obj.getOrder()+1)+1]; // i=1 and j=2
+  std::cout << m12 << std::endl;
+  m12 = mc.get(1, 2); // the same
+  std::cout << m12 << std::endl;
   return 0;
 }

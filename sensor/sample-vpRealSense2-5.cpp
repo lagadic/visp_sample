@@ -1,6 +1,11 @@
 #include <visp3/sensor/vpRealSense2.h>
 
-int main() {
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
+int main()
+{
 #ifdef VISP_HAVE_REALSENSE2
   vpRealSense2 rs;
   rs.open();
@@ -8,4 +13,3 @@ int main() {
 #endif
   return 0;
 }
-

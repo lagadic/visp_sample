@@ -1,5 +1,9 @@
 #include <visp3/core/vpLinearKalmanFilterInstantiation.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   vpLinearKalmanFilterInstantiation kalman;

@@ -1,5 +1,9 @@
 #include <visp3/sensor/vpFlyCaptureGrabber.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
 #if defined(VISP_HAVE_FLYCAPTURE)
@@ -14,7 +18,7 @@ int main()
   FlyCapture2::Format7Info fmt7Info;
   bool supported;
   fmt7Info.mode = k_fmt7Mode;
-  FlyCapture2::Error error = handler->GetFormat7Info( &fmt7Info, &supported );
+  FlyCapture2::Error error = handler->GetFormat7Info(&fmt7Info, &supported);
   if (error != FlyCapture2::PGRERROR_OK) {
     error.PrintErrorTrace();
     return -1;
@@ -25,7 +29,7 @@ int main()
     std::cout << "Offset Unit size: (" << fmt7Info.offsetHStepSize << ", " << fmt7Info.offsetVStepSize << ")" << std::endl;
     std::cout << "Pixel format bitfield: 0x" << fmt7Info.pixelFormatBitField << std::endl;
 
-    if ( (k_fmt7PixFmt & fmt7Info.pixelFormatBitField) == 0 ) {
+    if ((k_fmt7PixFmt & fmt7Info.pixelFormatBitField) == 0) {
       // Pixel format not supported!
       std::cout << "Pixel format is not supported" << std::endl;
       return -1;
@@ -33,4 +37,3 @@ int main()
   }
 #endif
 }
-

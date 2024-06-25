@@ -5,6 +5,10 @@
 #include <visp3/core/vpRotationMatrix.h>
 #include <visp3/core/vpHomogeneousMatrix.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
 #ifdef VISP_HAVE_VIPER850
@@ -18,7 +22,7 @@ int main()
   vpRxyzVector frc; // reference frame to camera frame rotations
 
   // Update the transformation between reference frame and camera frame
-  for (int i=0; i < 3; i++) {
+  for (int i = 0; i < 3; i++) {
     ftc[i] = position[i];   // tx, ty, tz
     frc[i] = position[i+3]; // ry, ry, rz
   }

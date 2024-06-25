@@ -3,7 +3,11 @@
 #include <visp3/io/vpImageIo.h>
 
 #if defined(VISP_HAVE_YARP)
-  #include <yarp/sig/ImageFile.h>
+#include <yarp/sig/ImageFile.h>
+#endif
+
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
 #endif
 
 int main()
@@ -11,11 +15,11 @@ int main()
 #if defined(VISP_HAVE_YARP)
   yarp::sig::ImageOf< yarp::sig::PixelRgb > *Iyarp = new yarp::sig::ImageOf< yarp::sig::PixelRgb >();
   // Read an image on a disk
-  yarp::sig::file::read(*Iyarp,"image.pgm");
+  yarp::sig::file::read(*Iyarp, "image.pgm");
 
   // Convert the yarp::sig::ImageOf<yarp::sig::PixelRgb> to a vpImage<vpRGBa>
   vpImage<vpRGBa> I;
-  vpImageConvert::convert(Iyarp,I);
+  vpImageConvert::convert(Iyarp, I);
 
   // ...
 #endif

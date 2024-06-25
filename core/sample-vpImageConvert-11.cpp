@@ -3,7 +3,11 @@
 #include <visp3/io/vpImageIo.h>
 
 #if defined(VISP_HAVE_YARP)
-  #include <yarp/sig/ImageFile.h>
+#include <yarp/sig/ImageFile.h>
+#endif
+
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
 #endif
 
 int main()

@@ -3,6 +3,10 @@
 #include <fstream>
 #include <visp3/core/vpIoTools.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   std::string username;
@@ -10,16 +14,16 @@ int main()
 
   // Test if a username directory exist. If no try to create it
   if (vpIoTools::checkDirectory(username) == false) {
-     try {
-       // Create a directory with name "username"
-       vpIoTools::makeDirectory(username);
-     }
-     catch (...) {
-       std::cout << "Cannot create " << username << " directory" << std::endl;
-       return EXIT_FAILURE;
-     }
-   }
-  // Create a empty filename with name "username/file.txt"
+    try {
+      // Create a directory with name "username"
+      vpIoTools::makeDirectory(username);
+    }
+    catch (...) {
+      std::cout << "Cannot create " << username << " directory" << std::endl;
+      return EXIT_FAILURE;
+    }
+  }
+ // Create a empty filename with name "username/file.txt"
   std::ofstream f;
   std::string filename = username + "/file.txt";
   // Under Windows converts the filename string into "username\\file.txt"

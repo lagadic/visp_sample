@@ -1,6 +1,10 @@
 #include <visp3/core/vpMomentObject.h>
 #include <visp3/core/vpImage.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   vpCameraParameters cam;             // Camera parameters used for pixel to meter conversion

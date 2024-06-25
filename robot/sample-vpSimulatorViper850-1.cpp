@@ -2,6 +2,10 @@
 #include <visp3/core/vpColVector.h>
 #include <visp3/core/vpMath.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
 #if defined(VISP_HAVE_MODULE_GUI) && defined(VISP_HAVE_THREADS)

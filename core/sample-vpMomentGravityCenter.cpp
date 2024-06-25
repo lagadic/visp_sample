@@ -3,6 +3,10 @@
 #include <visp3/core/vpMomentGravityCenter.h>
 #include <iostream>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   // Define the contour of an object by a 5 clockwise vertices on a plane
@@ -21,19 +25,19 @@ int main()
   vec_p.push_back(p);
 
   vpMomentObject obj(1); // Create an image moment object with 1 as
-			 // maximum order (because only m00,m01,m10
-			 // are needed to compute the gravity center primitive.
+       // maximum order (because only m00,m01,m10
+       // are needed to compute the gravity center primitive.
   obj.setType(vpMomentObject::DENSE_POLYGON); // The object is defined by a countour polygon
   obj.fromVector(vec_p); // Init the dense object with the polygon
 
   vpMomentGravityCenter g; // declaration of gravity center
   g.update(obj); // specify the object
   g.compute(); // compute the moment
-  
+
   std::cout << "Xg=" << g.getXg() << std::endl; // access to Xg
   std::cout << "Yg=" << g.getYg() << std::endl; // access to Yg
 
-  std::cout << g << std:: endl; // print gravity center
-  
+  std::cout << g << std::endl; // print gravity center
+
   return 0;
 }

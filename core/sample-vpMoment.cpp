@@ -4,6 +4,10 @@
 #include <visp3/core/vpMomentDatabase.h>
 #include <visp3/core/vpMomentCentered.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   vpPoint p;

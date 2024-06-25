@@ -3,7 +3,12 @@
 #include <visp3/gui/vpDisplayX.h>
 #include <visp3/sensor/vpRealSense2.h>
 
-int main() {
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
+int main()
+{
 #ifdef VISP_HAVE_REALSENSE2
   vpRealSense2 rs;
   rs2::config config;
@@ -23,7 +28,7 @@ int main() {
 #endif
   rs2::align align_to(RS2_STREAM_COLOR);
   while (true) {
-    rs.acquire((unsigned char *) Ic.bitmap, (unsigned char *) Id_raw.bitmap, NULL, NULL, &align_to);
+    rs.acquire((unsigned char *)Ic.bitmap, (unsigned char *)Id_raw.bitmap, NULL, NULL, &align_to);
     vpImageConvert::createDepthHistogram(Id_raw, Id);
     vpDisplay::display(Ic);
     vpDisplay::display(Id);
@@ -35,4 +40,3 @@ int main() {
 #endif
   return 0;
 }
-

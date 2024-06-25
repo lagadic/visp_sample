@@ -4,6 +4,10 @@
 #include <visp3/sensor/vpRealSense.h>
 #include <visp3/gui/vpPlot.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   vpRealSense rs;
@@ -17,6 +21,5 @@ int main()
 }
 
 #else
-int main() {}
+int main() { }
 #endif
-

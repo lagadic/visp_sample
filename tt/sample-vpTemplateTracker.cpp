@@ -1,6 +1,10 @@
 #include <visp3/tt/vpTemplateTrackerSSDInverseCompositional.h>
 #include <visp3/tt/vpTemplateTrackerWarpHomography.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   vpImage<unsigned char> I;

@@ -2,6 +2,9 @@
 #include <visp3/core/vpImage.h>
 #include <visp3/core/vpImagePoint.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
 
 int main()
 {
@@ -16,10 +19,10 @@ int main()
   vpDisplay::display(I);
   std::string text;
   bool motion_allowed = false;
-  center.set_u( I.getWidth()/2  );
-  center.set_v( I.getHeight()/2 );
+  center.set_u(I.getWidth()/2);
+  center.set_v(I.getHeight()/2);
 
-  for ( ; ; ) {
+  for (; ; ) {
     vpDisplay::display(I);
     //vpDisplay::setBackground(I, vpColor::black);
     pos_text.set_u(30);
@@ -34,31 +37,31 @@ int main()
     text = "A right click to quit...";
     vpDisplay::displayText(I, pos_text, text, vpColor::red);
 
-    if (vpDisplay::getPointerMotionEvent ( I, pointer ) ) {
+    if (vpDisplay::getPointerMotionEvent(I, pointer)) {
       if (motion_allowed) {
         center = pointer;
         //std::cout << "focus: " << pointer << std::endl;
       }
     }
-    ip1.set_u( center.get_u() );
-    ip1.set_v( center.get_v() - 6*radius );
-    ip2.set_u( center.get_u() );
-    ip2.set_v( center.get_v() - 4*radius );
+    ip1.set_u(center.get_u());
+    ip1.set_v(center.get_v() - 6*radius);
+    ip2.set_u(center.get_u());
+    ip2.set_v(center.get_v() - 4*radius);
     vpDisplay::displayLine(I, ip1, ip2, vpColor::white, true);
-    ip1.set_u( center.get_u() - 6*radius );
-    ip1.set_v( center.get_v());
-    ip2.set_u( center.get_u() - 4*radius );
-    ip2.set_v( center.get_v() );
+    ip1.set_u(center.get_u() - 6*radius);
+    ip1.set_v(center.get_v());
+    ip2.set_u(center.get_u() - 4*radius);
+    ip2.set_v(center.get_v());
     vpDisplay::displayLine(I, ip1, ip2, vpColor::white, true);
-    ip1.set_u( center.get_u() );
-    ip1.set_v( center.get_v() + 6*radius );
-    ip2.set_u( center.get_u() );
-    ip2.set_v( center.get_v() + 4*radius );
+    ip1.set_u(center.get_u());
+    ip1.set_v(center.get_v() + 6*radius);
+    ip2.set_u(center.get_u());
+    ip2.set_v(center.get_v() + 4*radius);
     vpDisplay::displayLine(I, ip1, ip2, vpColor::white, true);
-    ip1.set_u( center.get_u() + 6*radius );
-    ip1.set_v( center.get_v());
-    ip2.set_u( center.get_u() + 4*radius );
-    ip2.set_v( center.get_v() );
+    ip1.set_u(center.get_u() + 6*radius);
+    ip1.set_v(center.get_v());
+    ip2.set_u(center.get_u() + 4*radius);
+    ip2.set_v(center.get_v());
     vpDisplay::displayLine(I, ip1, ip2, vpColor::white, true);
     vpDisplay::displayCircle(I, center, 2*radius, vpColor::white, true);
     //     vpDisplay::displayCircle(I, center, 1.5*radius, vpColor::black, true);

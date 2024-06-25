@@ -14,6 +14,9 @@
 #include <visp/vpRequest.h>
 #include <string.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
 class vpRequestVector : public vpRequest
 {
 private:
@@ -33,18 +36,21 @@ public:
 /* begin vpRequestImage.cpp */
 //#include "vpRequestImage.h"
 
-vpRequestVector::vpRequestVector(){
+vpRequestVector::vpRequestVector()
+{
   request_id = "vector";
 }
 
-vpRequestVector::vpRequestVector(vpColVector *v){
+vpRequestVector::vpRequestVector(vpColVector *v)
+{
   request_id = "vector";
   vec = v;
 }
 
-vpRequestVector::~vpRequestVector(){}
+vpRequestVector::~vpRequestVector() { }
 
-void vpRequestVector::encode(){
+void vpRequestVector::encode()
+{
   clear();
 
   unsigned int size = vec->getRows();
@@ -52,17 +58,18 @@ void vpRequestVector::encode(){
   addParameterObject(&size);
 }
 
-void vpRequestVector::decode(){
-  if(listOfParams.size() == 1){
+void vpRequestVector::decode()
+{
+  if (listOfParams.size() == 1) {
     unsigned int size;
-    memcpy((void*)&size, (void*)listOfParams[0].c_str(), sizeof(unsigned int));
+    memcpy((void *)&size, (void *)listOfParams[0].c_str(), sizeof(unsigned int));
     std::cout << size << std::endl;
   }
 }
 
 /* end vpRequestImage.cpp */
 
-int main(int argc,const char** argv)
+int main(int argc, const char **argv)
 {
   int port = 35000;
 
@@ -77,16 +84,14 @@ int main(int argc,const char** argv)
 
   bool run = true;
 
-  while(run){
+  while (run) {
     serv.checkForConnections();
 
-    if(serv.getNumberOfClients() > 0)
-    {
+    if (serv.getNumberOfClients() > 0) {
       int index = serv.receiveAndDecodeRequestOnce();
       std::string id = serv.getRequestIdFromIndex(index);
 
-      if(id == "vector")
-      {
+      if (id == "vector") {
 
       }
     }

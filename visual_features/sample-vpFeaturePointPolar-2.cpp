@@ -1,17 +1,21 @@
 #include <visp3/visual_features/vpFeaturePointPolar.h>
 #include <visp3/core/vpMatrix.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   // Creation of the current feature s
   vpFeaturePointPolar s;
   // Initialize the current feature
-  s.buildFrom(0.1, M_PI, 1); // rho=0.1m, theta=pi, Z=1m
+  s.build(0.1, M_PI, 1); // rho=0.1m, theta=pi, Z=1m
 
   // Creation of the desired feature s
   vpFeaturePointPolar s_star;
   // Initialize the desired feature
-  s.buildFrom(0.15, 0, 0.8); // rho=0.15m, theta=0, Z=0.8m
+  s.build(0.15, 0, 0.8); // rho=0.15m, theta=0, Z=0.8m
 
   // Compute the interaction matrix L_s for the current feature
   vpMatrix L = s.interaction();

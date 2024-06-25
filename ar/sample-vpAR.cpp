@@ -4,11 +4,15 @@
 #include <visp3/core/vpHomogeneousMatrix.h>
 #include <visp3/core/vpImage.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 #ifdef VISP_HAVE_COIN3D_AND_GUI
 static void *mainloopfunction(void *_simu)
 {
-  vpAR *simu = (vpAR *)_simu ;
-  simu->initMainApplication() ;
+  vpAR *simu = (vpAR *)_simu;
+  simu->initMainApplication();
 
   vpImage<unsigned char> I;
   vpHomogeneousMatrix cMo;
@@ -16,9 +20,9 @@ static void *mainloopfunction(void *_simu)
   //Your code to compute the pose cMo.
 
   //Set the image to use as background.
-  simu->setImage(I) ;
+  simu->setImage(I);
   //Set the camera position thanks to the pose cMo computed before.
-  simu->setCameraPosition(cMo) ;
+  simu->setCameraPosition(cMo);
 
   simu->closeMainApplication();
 }
@@ -29,10 +33,10 @@ int main()
 #ifdef VISP_HAVE_COIN3D_AND_GUI
   vpAR simu;
   //Camera parameters.
-  vpCameraParameters cam(600,600,160,120);
+  vpCameraParameters cam(600, 600, 160, 120);
 
   //Initialize the internal view of the simulator.
-  simu.initInternalViewer(640,480, vpSimulator::grayImage);
+  simu.initInternalViewer(640, 480, vpSimulator::grayImage);
 
   vpTime::wait(300);
 

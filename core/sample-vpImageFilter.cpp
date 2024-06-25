@@ -1,6 +1,10 @@
 #include <visp3/core/vpImage.h>
 #include <visp3/core/vpImageFilter.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
 #if defined(VISP_HAVE_OPENCV) && defined(HAVE_OPENCV_IMGPROC)
@@ -20,4 +24,3 @@ int main()
 #endif
   return (0);
 }
-

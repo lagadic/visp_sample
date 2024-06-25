@@ -5,6 +5,10 @@
 #include <visp3/visual_features/vpFeatureMoment.h>
 #include <visp3/visual_features/vpFeatureMomentBasic.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   vpPoint p;
@@ -28,16 +32,16 @@ int main()
         //more than a shortcut to the vpMomentObject)
   bm.linkTo(mdb); //add basic moment to moment database
 
-  vpFeatureMomentBasic fmb(mdb,0,0,1,NULL);
+  vpFeatureMomentBasic fmb(mdb, 0, 0, 1, NULL);
 
   //update and compute the vpMoment BEFORE doing any operations with
   //vpFeatureMoment
   bm.update(obj);
   bm.compute();
 
-  fmb.update(0,0,1); //update the vpFeatureMoment with a plane
+  fmb.update(0, 0, 1); //update the vpFeatureMoment with a plane
          //configuration
-  std::cout << fmb.interaction(1,1) << std::endl;
+  std::cout << fmb.interaction(1, 1) << std::endl;
 
   return 0;
 }

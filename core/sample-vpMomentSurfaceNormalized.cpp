@@ -5,8 +5,12 @@
 #include <visp3/core/vpMomentCentered.h>
 #include <visp3/core/vpMomentAreaNormalized.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
-{  
+{
   vpPoint p;
   std::vector<vpPoint> vec_p; // vector that contains object points
 
@@ -17,18 +21,18 @@ int main()
 
   //////////////////////////////REFERENCE VALUES////////////////////////////////
   vpMomentObject obj(2); // Object where all the moment defined with
-			 // i+j <= 2 will be computed below. Order is
-			 // 2 because in discrete mode, the surface
-			 // computation is a=mu02+mu02
-  
-  
+       // i+j <= 2 will be computed below. Order is
+       // 2 because in discrete mode, the surface
+       // computation is a=mu02+mu02
+
+
   obj.setType(vpMomentObject::DISCRETE); // Discrete mode for object
   obj.fromVector(vec_p); // initialize the object with the points coordinates
 
   vpMomentDatabase db; //reference database
   vpMomentGravityCenter g; // declaration of gravity center
   vpMomentCentered mc; //  centered moments
-  vpMomentAreaNormalized an(2,1); //declare normalized surface with
+  vpMomentAreaNormalized an(2, 1); //declare normalized surface with
                                 //destination depth of 1 meter and
                                 //destination surface of 2 m2
 

@@ -5,6 +5,10 @@
 #include <visp3/io/vpImageIo.h>
 #include <visp3/mbt/vpMbEdgeTracker.h>
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 int main()
 {
   vpMbEdgeTracker tracker; // Create a model based tracker.
@@ -17,7 +21,7 @@ int main()
 
 #if defined VISP_HAVE_X11
   vpDisplayX display;
-  display.init(I,100,100,"Mb Edge Tracker");
+  display.init(I, 100, 100, "Mb Edge Tracker");
 #endif
 
 #if defined VISP_HAVE_PUGIXML
@@ -29,14 +33,14 @@ int main()
   // cube.init file.
   tracker.initClick(I, "cube.init");
 
-  while(true){
+  while (true) {
     // Acquire a new image
     vpDisplay::display(I);
     tracker.track(I);     // Track the object on this image
     tracker.getPose(cMo); // Get the pose
 
     tracker.display(I, cMo, cam, vpColor::darkRed, 1); // Display the model at the computed pose.
-   vpDisplay::flush(I);
+    vpDisplay::flush(I);
   }
 
   return 0;

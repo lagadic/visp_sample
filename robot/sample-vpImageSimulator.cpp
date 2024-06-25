@@ -4,22 +4,21 @@
 
 int main()
 {
-  vpImage<vpRGBa> Icamera(480,640,0);
-  vpImage<vpRGBa> Iimage(60,60);
+  vpImage<vpRGBa> Icamera(480, 640, vpRGBa(0));
+  vpImage<vpRGBa> Iimage(60, 60);
 
   // Initialise the image which will be projected into the image Icamera
-  vpRGBa colorb(0,0,255);
-  vpRGBa colorw(255,255,255);
-  vpRGBa colorr(255,0,0);
-  for(int i = 0; i < 60; i++)
-    {
-      for(int j = 0; j < 20; j++)
-        Iimage[i][j] = colorb;
-      for(int j = 20; j < 40; j++)
-        Iimage[i][j] = colorw;
-      for(int j = 40; j < 60; j++)
-        Iimage[i][j] = colorr;
-    }
+  vpRGBa colorb(0, 0, 255);
+  vpRGBa colorw(255, 255, 255);
+  vpRGBa colorr(255, 0, 0);
+  for (int i = 0; i < 60; i++) {
+    for (int j = 0; j < 20; j++)
+      Iimage[i][j] = colorb;
+    for (int j = 20; j < 40; j++)
+      Iimage[i][j] = colorw;
+    for (int j = 40; j < 60; j++)
+      Iimage[i][j] = colorr;
+  }
 
   // Initialise the 3D coordinates of the Iimage corners
   vpColVector X[4];
@@ -47,11 +46,11 @@ int main()
   vpImageSimulator sim;
   sim.init(Iimage, X);
 
-  sim.setCameraPosition(vpHomogeneousMatrix(0,0,5,vpMath::rad(60),vpMath::rad(0),0));
+  sim.setCameraPosition(vpHomogeneousMatrix(0, 0, 5, vpMath::rad(60), vpMath::rad(0), 0));
 
   vpCameraParameters cam(868.0, 869.0, 320, 240);
 
-  sim.getImage(Icamera,cam);
+  sim.getImage(Icamera, cam);
 
   vpImageIo::write(Icamera, "/tmp/I.pgm");
 

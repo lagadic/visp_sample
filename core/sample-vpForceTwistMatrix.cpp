@@ -12,7 +12,7 @@ int main()
   vpHomogeneousMatrix sMp; // Force/torque sensor frame to probe frame transformation
   // ... sMp need here to be initialized
 
-  sFp.build(sMp);
+  sFp.buildFrom(sMp);
 
   vpColVector p_H(6); // Force/torque skew in the probe frame: fx,fy,fz,tx,ty,tz
   // ... p_H should here have an initial value

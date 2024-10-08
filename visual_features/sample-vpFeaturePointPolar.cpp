@@ -21,7 +21,7 @@ int main()
 
   // Initialize the desired pose between the camera and the object frame
   vpHomogeneousMatrix cMod;
-  cMod.build(0, 0, 1, 0, 0, 0);
+  cMod.buildFrom(0, 0, 1, 0, 0, 0);
 
   // Compute the desired position of the point
   for (int i = 0; i < 4; i++) {
@@ -39,7 +39,7 @@ int main()
 
   // Initialize the current pose between the camera and the object frame
   vpHomogeneousMatrix cMo;
-  cMo.build(0, 0, 1.2, 0, 0, M_PI);
+  cMo.buildFrom(0, 0, 1.2, 0, 0, M_PI);
   // ... cMo need here to be computed from a pose estimation
 
   for (int i = 0; i < 4; i++) {

@@ -15,7 +15,7 @@ int main()
 
   // Creation of the current visual feature s
   vpFeatureTranslation s(vpFeatureTranslation::cdMc);
-  s.build(cdMc); // Initialization of the current feature s=(tx,ty,tz)
+  s.buildFrom(cdMc); // Initialization of the current feature s=(tx,ty,tz)
 
   // Set eye-in-hand control law.
   // The computed velocities will be expressed in the camera frame
@@ -34,7 +34,7 @@ int main()
     // ... cdMc need here to be initialized from for example a pose estimation.
 
     // Update the current 3D translation visual feature
-    s.build(cdMc);
+    s.buildFrom(cdMc);
 
     // compute the control law
     vpColVector v = task.computeControlLaw(); // camera velocity

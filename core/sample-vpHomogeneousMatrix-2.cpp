@@ -23,6 +23,6 @@ int main()
   std::cout << "M1:\n" << M1 << std::endl;
 
   vpHomogeneousMatrix M2;
-  M2.build(v);
+  M2.buildFrom(v);
   std::cout << "M2:\n" << M2 << std::endl;
 }

@@ -20,7 +20,7 @@ int main()
   vpRotationMatrix R(tu);
 
   // Extract the theta U angles from a rotation matrix
-  tu.build(R);
+  tu.buildFrom(R);
 
   // Print the extracted theta U angles. Values are the same than the
   // one used for initialization

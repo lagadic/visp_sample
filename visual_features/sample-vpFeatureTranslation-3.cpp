@@ -15,14 +15,14 @@ int main()
 
   // Creation of the desired visual feature s*
   vpFeatureTranslation s_star(vpFeatureTranslation::cMo);
-  s_star.build(cdMo); // Initialization of the desired feature s*=(tx*,ty*,tz*)
+  s_star.buildFrom(cdMo); // Initialization of the desired feature s*=(tx*,ty*,tz*)
 
   vpHomogeneousMatrix cMo;
   // ... cMo need here to be computed.
 
   // Creation of the current visual feature s
   vpFeatureTranslation s(vpFeatureTranslation::cMo);
-  s.build(cMo); // Initialization of the current feature s=(tx,ty,tz)
+  s.buildFrom(cMo); // Initialization of the current feature s=(tx,ty,tz)
 
   // Set eye-in-hand control law.
   // The computed velocities will be expressed in the camera frame
@@ -41,7 +41,7 @@ int main()
     // ... cMo need here to be computed from for example a pose estimation.
 
     // Update the current 3D translation visual feature
-    s.build(cMo);
+    s.buildFrom(cMo);
 
     // compute the control law
     vpColVector v = task.computeControlLaw(); // camera velocity

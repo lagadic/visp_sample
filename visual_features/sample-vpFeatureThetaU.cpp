@@ -13,7 +13,7 @@ int main()
 
   // Creation of the current feature s
   vpFeatureThetaU s(vpFeatureThetaU::cdRc);
-  s.build(cdMc); // Initialization of the feature
+  s.buildFrom(cdMc); // Initialization of the feature
 
   // Creation of the desired feature s*. By default this feature is
   // initialized to zero

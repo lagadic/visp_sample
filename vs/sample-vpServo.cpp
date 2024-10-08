@@ -22,8 +22,8 @@ int main()
   vpFeatureTranslation s_t(vpFeatureTranslation::cdMc);
   vpFeatureThetaU s_tu(vpFeatureThetaU::cdRc);
   // Set the initial values of the current visual feature s = (c*_t_c, ThetaU)
-  s_t.build(cdMc);
-  s_tu.build(cdMc);
+  s_t.buildFrom(cdMc);
+  s_tu.buildFrom(cdMc);
 
   // Build the desired visual feature s* = (0,0)
   vpFeatureTranslation s_star_t(vpFeatureTranslation::cdMc); // Default initialization to zero
@@ -55,8 +55,8 @@ int main()
     // ... cdMc is here the result of a pose estimation
 
     // Update the current visual feature s
-    s_t.build(cdMc);  // Update translation visual feature
-    s_tu.build(cdMc); // Update ThetaU visual feature
+    s_t.buildFrom(cdMc);  // Update translation visual feature
+    s_tu.buildFrom(cdMc); // Update ThetaU visual feature
 
     v = task.computeControlLaw(); // Compute camera velocity skew
     error = (task.getError()).sumSquare(); // error = ||s - s_star||

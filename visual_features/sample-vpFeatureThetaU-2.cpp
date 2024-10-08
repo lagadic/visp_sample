@@ -17,7 +17,7 @@ int main()
   // in angle/axis parametrization between the current camera frame
   // and the desired camera frame
   vpFeatureThetaU s(vpFeatureThetaU::cRcd);
-  s.build(cMcd); // Initialization of the feature
+  s.buildFrom(cMcd); // Initialization of the feature
 
   // Set eye-in-hand control law.
   // The computed velocities will be expressed in the camera frame
@@ -38,7 +38,7 @@ int main()
     // ... cMcd need here to be initialized from for example a pose estimation.
 
     // Update the current ThetaU visual feature
-    s.build(cMcd);
+    s.buildFrom(cMcd);
 
     // compute the control law
     vpColVector v = task.computeControlLaw(); // camera velocity

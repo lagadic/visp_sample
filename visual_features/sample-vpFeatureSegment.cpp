@@ -24,7 +24,7 @@ int main()
 
   // Build the segment visual feature
   vpFeatureSegment s;
-  s.build(p1.get_x(), p1.get_y(), p1.get_Z(), p2.get_x(), p2.get_y(), p2.get_Z());
+  s.buildFrom(p1.get_x(), p1.get_y(), p1.get_Z(), p2.get_x(), p2.get_y(), p2.get_Z());
 
   s.print();
 

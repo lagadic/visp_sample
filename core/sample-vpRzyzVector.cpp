@@ -19,7 +19,7 @@ int main()
   vpRotationMatrix R(rzyz);
 
   // Extract the Euler angles around z,y,z axis from a rotation matrix
-  rzyz.build(R);
+  rzyz.buildFrom(R);
 
   // Print the extracted Euler angles. Values are the same than the
   // one used for initialization

@@ -1,3 +1,4 @@
+#include <visp3/core/vpImage.h>
 #include <visp3/io/vpVideoReader.h>
 
 #ifdef ENABLE_VISP_NAMESPACE

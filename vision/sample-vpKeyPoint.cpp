@@ -3,7 +3,9 @@
 #include <visp3/io/vpImageIo.h>
 #include <visp3/vision/vpKeyPoint.h>
 
-#if defined(VISP_HAVE_OPENCV) && defined(HAVE_OPENCV_IMGPROC) && defined(HAVE_OPENCV_FEATURES2D)
+#if defined(HAVE_OPENCV_IMGPROC) && \
+  ((VISP_HAVE_OPENCV_VERSION < 0x050000) && defined(HAVE_OPENCV_CALIB3D) && defined(HAVE_OPENCV_FEATURES2D)) || \
+  ((VISP_HAVE_OPENCV_VERSION >= 0x050000) && defined(HAVE_OPENCV_3D) && defined(HAVE_OPENCV_FEATURES))
 
 #ifdef ENABLE_VISP_NAMESPACE
 using namespace VISP_NAMESPACE_NAME;
@@ -20,8 +22,7 @@ int main()
   const std::string extractorName = "ORB";
   //Hamming distance must be used with ORB
   const std::string matcherName = "BruteForce-Hamming";
-  vpKeyPoint::vpFilterMatchingType filterType =
-    vpKeyPoint::ratioDistanceThreshold;
+  vpKeyPoint::vpFilterMatchingType filterType = vpKeyPoint::ratioDistanceThreshold;
 
   vpKeyPoint keypoint(detectorName, extractorName, matcherName, filterType);
 

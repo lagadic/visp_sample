@@ -8,14 +8,17 @@ using namespace VISP_NAMESPACE_NAME;
 
 int main()
 {
-#if defined(VISP_HAVE_OPENCV) && defined(HAVE_OPENCV_IMGPROC) && defined(HAVE_OPENCV_FEATURES2D)
+#if defined(HAVE_OPENCV_IMGPROC) && \
+  ((VISP_HAVE_OPENCV_VERSION < 0x050000) && defined(HAVE_OPENCV_CALIB3D) && defined(HAVE_OPENCV_FEATURES2D)) || \
+  ((VISP_HAVE_OPENCV_VERSION >= 0x050000) && defined(HAVE_OPENCV_3D) && defined(HAVE_OPENCV_FEATURES))
+
   vpImage<unsigned char> Ireference;
   vpImage<unsigned char> Icurrent;
 
   vpKeyPoint::vpFilterMatchingType filterType = vpKeyPoint::ratioDistanceThreshold;
   vpKeyPoint keypoint("ORB", "ORB", "BruteForce-Hamming", filterType);
 
-  //First grab the reference image Irefrence
+  //First grab the reference image Ireference
   //Add your code to load the reference image in Ireference
 
   //Select a part of the image by clincking on two points which define a rectangle

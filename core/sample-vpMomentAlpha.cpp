@@ -66,13 +66,13 @@ int main()
   ////////////entered in reverse order)////////////////
   vec_p.clear();
 
-  p.set_x(-3); p.set_y(1);                       // Coordinates in meters in the image plane (vertex 4)
+  p.set_x(-1); p.set_y(-1);                      // Coordinates in meters in the image plane (vertex 4)
   vec_p.push_back(p);
-  p.set_x(-3); p.set_y(0);                       // Coordinates in meters in the image plane (vertex 3)
+  p.set_x(-2); p.set_y(-2);                       // Coordinates in meters in the image plane (vertex 3)
   vec_p.push_back(p);
-  p.set_x(2); p.set_y(-2);                       // Coordinates in meters in the image plane (vertex 2)
+  p.set_x(3); p.set_y(-0);                       // Coordinates in meters in the image plane (vertex 2)
   vec_p.push_back(p);
-  p.set_x(1); p.set_y(-1);                       // Coordinates in meters in the image plane (vertex 1)
+  p.set_x(3); p.set_y(1);                        // Coordinates in meters in the image plane (vertex 1)
   vec_p.push_back(p);
 
   vpMomentObject obj(3);                         // Second object. Order 3 is also required because of the Alpha

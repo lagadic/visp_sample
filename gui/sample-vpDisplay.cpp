@@ -25,6 +25,8 @@ int main()
     std::string filename("/local/soft/ViSP/ViSP-images/Klimt/Klimt.ppm");
 #endif
 
+    vpImageIo::read(I, filename);
+
     // Depending on the detected third party libraries, we instantiate here the
     // first video device which is available
 #if (VISP_CXX_STANDARD >= VISP_CXX_STANDARD_11)

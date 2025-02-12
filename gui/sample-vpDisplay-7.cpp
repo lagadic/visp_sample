@@ -1,8 +1,5 @@
-#include <visp3/gui/vpDisplayOpenCV.h>
-#include <visp3/gui/vpDisplayX.h>
-#include <visp3/gui/vpDisplayGTK.h>
-#include <visp3/gui/vpDisplayGDI.h>
-#include <visp3/gui/vpDisplayD3D.h>
+#include <visp3/core/vpConfig.h>
+#include <visp3/gui/vpDisplayFactory.h>
 #include <visp3/io/vpImageIo.h>
 
 #ifdef ENABLE_VISP_NAMESPACE
@@ -13,31 +10,28 @@ int main()
 {
 #ifdef VISP_HAVE_DISPLAY
   vpImage<unsigned char> I;
-  vpImageIo::read(I, "lena.pgm");
+  vpImageIo::read(I, "Klimt.pgm");
 
-  vpDisplay *d;
-
-#if defined(VISP_HAVE_X11)
-  d = new vpDisplayX;
-#elif defined(VISP_HAVE_GTK)
-  d = new vpDisplayGTK;
-#elif defined(VISP_HAVE_GDI)
-  d = new vpDisplayGDI;
-#elif defined(VISP_HAVE_D3D9)
-  d = new vpDisplayD3D;
-#elif defined(HAVE_OPENCV_HIGHGUI)
-  d = new vpDisplayOpenCV;
+  // If a GUI library is available, create a display and
+  // initialize the display with the image I. Display and image are
+  // now link together.
+  // Otherwise, return nullptr or an unitialized shared_ptr.
+#if (VISP_CXX_STANDARD >= VISP_CXX_STANDARD_11)
+  std::shared_ptr<vpDisplay> display = vpDisplayFactory::createDisplay();
 #else
-  std::cout << "Sorry, no video device is available" << std::endl;
-  return -1;
+  vpDisplay *display = vpDisplayFactory::allocateDisplay();
 #endif
 
-  d->init(I.getWidth(), I.getHeight(), 10, 20, "viewer");
+  display->init(I.getWidth(), I.getHeight(), 10, 20, "viewer");
 
   // Now associate the display to the image
-  I.display = d;
+#if (VISP_CXX_STANDARD >= VISP_CXX_STANDARD_11)
+  I.display = display.get();
+#else
+  I.display = display;
+#endif
 
-  // Set the display background with image I content
+// Set the display background with image I content
   vpDisplay::display(I);
 
   // Flush the foreground and background display
@@ -46,6 +40,10 @@ int main()
   // wait for a mouse clink in the display to exit
   vpDisplay::getClick(I);
 
-  delete d;
+#if (VISP_CXX_STANDARD < VISP_CXX_STANDARD_11)
+  if (display != nullptr) {
+    delete display;
+  }
+#endif
 #endif
 }

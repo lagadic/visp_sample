@@ -1,9 +1,6 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/io/vpImageIo.h>
-#include <visp3/gui/vpDisplayOpenCV.h>
-#include <visp3/gui/vpDisplayX.h>
-#include <visp3/gui/vpDisplayGTK.h>
-#include <visp3/gui/vpDisplayGDI.h>
-#include <visp3/gui/vpDisplayD3D.h>
+#include <visp3/gui/vpDisplayFactory.h>
 
 #ifdef ENABLE_VISP_NAMESPACE
 using namespace VISP_NAMESPACE_NAME;
@@ -11,6 +8,13 @@ using namespace VISP_NAMESPACE_NAME;
 
 int main()
 {
+#ifdef VISP_HAVE_DISPLAY
+
+#if (VISP_CXX_STANDARD >= VISP_CXX_STANDARD_11)
+  std::shared_ptr<vpDisplay> display;
+#else
+  vpDisplay *display = nullptr;
+#endif
   try {
     vpImage<unsigned char> I; // Grey level image
 
@@ -21,29 +25,19 @@ int main()
     std::string filename("/local/soft/ViSP/ViSP-images/Klimt/Klimt.ppm");
 #endif
 
-    vpDisplay *d;
-
     // Depending on the detected third party libraries, we instantiate here the
     // first video device which is available
-#if defined(VISP_HAVE_X11)
-    d = new vpDisplayX;
-#elif defined(VISP_HAVE_GTK)
-    d = new vpDisplayGTK;
-#elif defined(VISP_HAVE_GDI)
-    d = new vpDisplayGDI;
-#elif defined(VISP_HAVE_D3D9)
-    d = new vpDisplayD3D;
-#elif defined(HAVE_OPENCV_HIGHGUI)
-    d = new vpDisplayOpenCV;
+#if (VISP_CXX_STANDARD >= VISP_CXX_STANDARD_11)
+    display = vpDisplayFactory::createDisplay();
+#else
+    display = vpDisplayFactory::allocateDisplay();
 #endif
 
-        // Initialize the display with the image I. Display and image are
-        // now link together.
-#ifdef VISP_HAVE_DISPLAY
-    d->init(I);
-#endif
+    // Initialize the display with the image I. Display and image are
+    // now link together.
+    display->init(I);
 
-        // Specify the window location
+    // Specify the window location
     vpDisplay::setWindowPosition(I, 400, 100);
 
     // Set the display window title
@@ -89,10 +83,12 @@ int main()
   // Wait for a click in the display window
     std::cout << "Wait for a button click..." << std::endl;
     vpDisplay::getClick(I);
-
-#ifdef VISP_HAVE_DISPLAY
-    delete d;
-#endif
   }
   catch (...) { }
+#if (VISP_CXX_STANDARD < VISP_CXX_STANDARD_11)
+  if (display != nullptr) {
+    delete display;
+  }
+#endif
+#endif
 }

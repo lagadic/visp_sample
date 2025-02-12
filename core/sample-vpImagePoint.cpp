@@ -1,11 +1,11 @@
 #include <iostream>
 
+#include <visp3/core/vpConfig.h>
 #include <visp3/core/vpImagePoint.h>
 #include <visp3/core/vpTime.h>
 #include <visp3/core/vpImage.h>
 #include <visp3/core/vpColor.h>
-#include <visp3/gui/vpDisplayX.h>
-#include <visp3/gui/vpDisplayGDI.h>
+#include <visp3/gui/vpDisplayFactory.h>
 #include <visp3/core/vpMath.h>
 
 #ifdef ENABLE_VISP_NAMESPACE
@@ -20,10 +20,10 @@ int main()
   vpImage<unsigned char> I(240, 320);
   I = 255;
 
-#ifdef VISP_HAVE_X11
-  vpDisplayX d(I);
-#elif defined(VISP_HAVE_GDI)
-  vpDisplayGDI d(I);
+#if (VISP_CXX_STANDARD >= VISP_CXX_STANDARD_11)
+  std::shared_ptr<vpDisplay> display = vpDisplayFactory::createDisplay(I);
+#else
+  vpDisplay *display = vpDisplayFactory::allocateDisplay(I);
 #endif
 
   {
@@ -98,5 +98,10 @@ int main()
     //    vpDisplay::getClick(I);
   }
 
+#if (VISP_CXX_STANDARD < VISP_CXX_STANDARD_11)
+  if (display != nullptr) {
+    delete display;
+  }
+#endif
   return 0;
 }

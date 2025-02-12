@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include <visp3/core/vpConfig.h>
 #include <visp3/core/vpColVector.h>
 #include <visp3/core/vpMatrix.h>
 

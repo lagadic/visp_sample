@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/core/vpVelocityTwistMatrix.h>
 
 #ifdef ENABLE_VISP_NAMESPACE

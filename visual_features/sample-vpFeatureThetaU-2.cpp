@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/visual_features/vpFeatureThetaU.h>
 #include <visp3/core/vpHomogeneousMatrix.h>
 #include <visp3/vs/vpServo.h>

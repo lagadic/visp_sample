@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/robot/vpSimulatorPioneer.h>
 
 #ifdef ENABLE_VISP_NAMESPACE

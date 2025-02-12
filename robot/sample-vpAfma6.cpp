@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/core/vpColVector.h>
 #include <visp3/core/vpHomogeneousMatrix.h>
 #include <visp3/robot/vpRobotAfma6.h>
@@ -38,6 +39,6 @@ int main()
     q2 = q1;
     robot.getInverseKinematics(fMc, q2, false);
     std::cout << "Second solution: " << q2 << std::endl;
-  }
+}
 #endif
 }

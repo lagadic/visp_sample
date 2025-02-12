@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <visp3/core/vpConfig.h>
 #include <visp3/io/vpParseArgv.h>
 #include <visp3/core/vpMath.h>
 

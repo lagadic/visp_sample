@@ -12,9 +12,7 @@ int main()
   vpImage<unsigned char> I;
   vpImageIo::read(I, "Klimt.pgm");
 
-  // If a GUI library is available, create a display and
-  // initialize the display with the image I. Display and image are
-  // now link together.
+  // If a GUI library is available, create a display.
   // Otherwise, return nullptr or an unitialized shared_ptr.
 #if (VISP_CXX_STANDARD >= VISP_CXX_STANDARD_11)
   std::shared_ptr<vpDisplay> display = vpDisplayFactory::createDisplay();

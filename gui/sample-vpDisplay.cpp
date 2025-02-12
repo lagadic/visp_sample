@@ -27,17 +27,15 @@ int main()
 
     vpImageIo::read(I, filename);
 
-    // Depending on the detected third party libraries, we instantiate here the
-    // first video device which is available
-#if (VISP_CXX_STANDARD >= VISP_CXX_STANDARD_11)
-    display = vpDisplayFactory::createDisplay();
-#else
-    display = vpDisplayFactory::allocateDisplay();
-#endif
-
-    // Initialize the display with the image I. Display and image are
+    // If a GUI library is available, create a display and
+    // initialize the display with the image I. Display and image are
     // now link together.
-    display->init(I);
+    // Otherwise, return nullptr or an unitialized shared_ptr.
+#if (VISP_CXX_STANDARD >= VISP_CXX_STANDARD_11)
+    std::shared_ptr<vpDisplay> display = vpDisplayFactory::createDisplay(I);
+#else
+    vpDisplay *display = vpDisplayFactory::allocateDisplay(I);
+#endif
 
     // Specify the window location
     vpDisplay::setWindowPosition(I, 400, 100);

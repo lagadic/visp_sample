@@ -1,6 +1,7 @@
+
+#include <visp3/core/vpConfig.h>
 #include <visp3/core/vpImageConvert.h>
-#include <visp3/gui/vpDisplayGDI.h>
-#include <visp3/gui/vpDisplayX.h>
+#include <visp3/gui/vpDisplayFactory.h>
 #include <visp3/sensor/vpRealSense2.h>
 
 #ifdef ENABLE_VISP_NAMESPACE
@@ -19,12 +20,12 @@ int main()
   vpImage<vpRGBa> Ic(rs.getIntrinsics(RS2_STREAM_COLOR).height, rs.getIntrinsics(RS2_STREAM_COLOR).width);
   vpImage<uint16_t> Id_raw(rs.getIntrinsics(RS2_STREAM_DEPTH).height, rs.getIntrinsics(RS2_STREAM_DEPTH).width);
   vpImage<vpRGBa> Id(rs.getIntrinsics(RS2_STREAM_DEPTH).height, rs.getIntrinsics(RS2_STREAM_DEPTH).width);
-#ifdef VISP_HAVE_X11
-  vpDisplayX dc(Ic, 0, 0, "Color");
-  vpDisplayX dd(Id, 100, 100, "Depth aligned to color");
-#elif defined(VISP_HAVE_GDI)
-  vpDisplayGDI dc(Ic, 0, 0, "Color");
-  vpDisplayGDI dd(Id, 100, 100, "Depth aligned to color");
+#if (VISP_CXX_STANDARD >= VISP_CXX_STANDARD_11)
+  std::shared_ptr<vpDisplay> dc = vpDisplayFactory::createDisplay(Ic, 0, 0, "Color");
+  std::shared_ptr<vpDisplay> dd = vpDisplayFactory::createDisplay(Id, 100, 100, "Depth aligned to color");
+#else
+  vpDisplay *dc = vpDisplayFactory::allocateDisplay(Ic, 0, 0, "Color");
+  vpDisplay *dd = vpDisplayFactory::allocateDisplay(Id, 100, 100, "Depth aligned to color");
 #endif
   rs2::align align_to(RS2_STREAM_COLOR);
   while (true) {
@@ -37,6 +38,14 @@ int main()
     if (vpDisplay::getClick(Ic, false) || vpDisplay::getClick(Id, false))
       break;
   }
+#if (VISP_CXX_STANDARD < VISP_CXX_STANDARD_11)
+  if (dc != nullptr) {
+    delete dc;
+  }
+  if (dd != nullptr) {
+    delete dd;
+  }
+#endif
 #endif
   return 0;
 }

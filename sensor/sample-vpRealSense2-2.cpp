@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/sensor/vpRealSense2.h>
 #ifdef VISP_HAVE_PCL
 #include <pcl/visualization/cloud_viewer.h>

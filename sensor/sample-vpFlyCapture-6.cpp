@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/sensor/vpFlyCaptureGrabber.h>
 
 #ifdef ENABLE_VISP_NAMESPACE
@@ -12,6 +13,6 @@ int main()
   for (unsigned int i = 0; i<num_cameras; i++) {
     unsigned int serial_id = vpFlyCaptureGrabber::getCameraSerial(i);
     std::cout << "Camera with index " << i << " has serial id: " << serial_id << std::endl;
-  }
+}
 #endif
 }

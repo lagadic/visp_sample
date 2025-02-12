@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/sensor/vpV4l2Grabber.h>
 #include <visp3/io/vpImageIo.h>
 

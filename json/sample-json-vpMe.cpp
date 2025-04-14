@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/me/vpMe.h>
 
 #ifdef ENABLE_VISP_NAMESPACE

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <visp3/core/vpConfig.h>
 #include <visp3/visual_features/vpFeaturePoint3D.h>
 #include <visp3/core/vpHomogeneousMatrix.h>
 #include <visp3/core/vpMatrix.h>

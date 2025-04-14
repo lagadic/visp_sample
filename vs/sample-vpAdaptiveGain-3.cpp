@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/vs/vpAdaptiveGain.h>
 #include <visp3/vs/vpServo.h>
 

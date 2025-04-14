@@ -1,9 +1,11 @@
+#include <visp3/core/vpConfig.h>
+#include <visp3/gui/vpDisplayFactory.h>
 #include <visp3/mbt/vpMbEdgeKltTracker.h>
 #include <visp3/core/vpImage.h>
 #include <visp3/io/vpImageIo.h>
 #include <visp3/core/vpHomogeneousMatrix.h>
 #include <visp3/core/vpCameraParameters.h>
-#include <visp3/gui/vpDisplayX.h>
+
 
 #ifdef ENABLE_VISP_NAMESPACE
 using namespace VISP_NAMESPACE_NAME;
@@ -20,9 +22,10 @@ int main()
   // Acquire an image
   vpImageIo::readPGM(I, "cube.pgm");
 
-#if defined VISP_HAVE_X11
-  vpDisplayX display;
-  display.init(I, 100, 100, "Mb Hybrid Tracker");
+#if (VISP_CXX_STANDARD >= VISP_CXX_STANDARD_11)
+  std::shared_ptr<vpDisplay> display = vpDisplayFactory::createDisplay(I, 100, 100, "Mb Hybrid Tracker");
+#else
+  vpDisplay *display = vpDisplayFactory::allocateDisplay(I, 100, 100, "Mb Hybrid Tracker");
 #endif
 
   tracker.loadConfigFile("cube.xml"); // Load the configuration of the tracker
@@ -37,6 +40,11 @@ int main()
     vpDisplay::flush(I);
   }
 
+#if (VISP_CXX_STANDARD < VISP_CXX_STANDARD_11)
+  if (display != nullptr) {
+    delete display;
+  }
+#endif
   return 0;
 #endif
 }

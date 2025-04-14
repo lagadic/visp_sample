@@ -1,8 +1,8 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/core/vpClient.h>
 #include <visp3/sensor/vpV4l2Grabber.h>
 #include <visp3/core/vpImage.h>
-#include <visp3/gui/vpDisplayX.h>
-#include <visp3/gui/vpDisplayGDI.h>
+#include <visp3/gui/vpDisplayFactory.h>
 #include <iostream>
 
 //#include "vpRequestImage.h" //See vpRequest class documentation
@@ -92,10 +92,12 @@ int main(int argc, char **argv)
   g.open(I);
 
   // Create an image viewer
-#ifdef VISP_HAVE_X11
-  vpDisplayX d(I, -1, -1, "Camera frame");
-#elif defined VISP_HAVE_GDI //Win32
-  vpDisplayGDI d(I, -1, -1, "Camera frame");
+#ifdef VISP_HAVE_DISPLAY
+#if (VISP_CXX_STANDARD >= VISP_CXX_STANDARD_11)
+  std::shared_ptr<vpDisplay> display = vpDisplayFactory::createDisplay(I, -1, -1, "Camera frame");
+#else
+  vpDisplay *display = vpDisplayFactory::allocateDisplay(I, -1, -1, "Camera frame");
+#endif
 #endif
 
   vpClient client;
@@ -118,6 +120,12 @@ int main(int argc, char **argv)
     if (vpDisplay::getClick(I, false))
       break;
   }
+
+#if (VISP_CXX_STANDARD < VISP_CXX_STANDARD_11)
+  if (display != nullptr) {
+    delete display;
+  }
+#endif
 
   return 0;
 #endif

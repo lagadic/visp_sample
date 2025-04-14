@@ -1,8 +1,5 @@
-#include <visp3/gui/vpDisplayD3D.h>
-#include <visp3/gui/vpDisplayGDI.h>
-#include <visp3/gui/vpDisplayGTK.h>
-#include <visp3/gui/vpDisplayOpenCV.h>
-#include <visp3/gui/vpDisplayX.h>
+#include <visp3/core/vpConfig.h>
+#include <visp3/gui/vpDisplayFactory.h>
 
 #ifdef ENABLE_VISP_NAMESPACE
 using namespace VISP_NAMESPACE_NAME;
@@ -12,26 +9,14 @@ int main()
 {
   vpImage<unsigned char> I(240, 320); // Create a black grey level image
 
-  vpDisplay *d;
-
-  // Depending on the detected third party libraries, we instantiate here the
-  // first video device which is available
-#if defined(VISP_HAVE_X11)
-  d = new vpDisplayX;
-#elif defined(VISP_HAVE_GTK)
-  d = new vpDisplayGTK;
-#elif defined(VISP_HAVE_GDI)
-  d = new vpDisplayGDI;
-#elif defined(VISP_HAVE_D3D9)
-  d = new vpDisplayD3D;
-#elif defined(HAVE_OPENCV_HIGHGUI)
-  d = new vpDisplayOpenCV;
-#endif
-
-  // Initialize the display with the image I. Display and image are
+  // A new display will be instantiated if a GUI library is available
+  // ohterwise we will have nullptr or a uninitialized shared pointer.
+  // If the creation is successful, the display and image are
   // now link together.
-#ifdef VISP_HAVE_DISPLAY
-  d->init(I);
+#if (VISP_CXX_STANDARD >= VISP_CXX_STANDARD_11)
+  std::shared_ptr<vpDisplay> display = vpDisplayFactory::createDisplay(I);
+#else
+  vpDisplay *display = vpDisplayFactory::allocateDisplay(I);
 #endif
 
   // Set the display background with image I content
@@ -49,5 +34,9 @@ int main()
   // Flush the foreground and background display
   vpDisplay::flush(I);
 
-  delete d;
+#if (VISP_CXX_STANDARD < VISP_CXX_STANDARD_11)
+  if (display != nullptr) {
+    delete display;
+  }
+#endif
 }

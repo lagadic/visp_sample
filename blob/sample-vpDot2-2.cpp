@@ -1,5 +1,6 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/blob/vpDot2.h>
-#include <visp3/gui/vpDisplayX.h>
+#include <visp3/gui/vpDisplayFactory.h>
 #include <visp3/sensor/vp1394TwoGrabber.h>
 
 #ifdef ENABLE_VISP_NAMESPACE
@@ -13,8 +14,12 @@ int main()
   vp1394TwoGrabber g(false); // Create a grabber based on libdc1394-2.x third party lib
   g.acquire(I); // Acquire an image
 
-#if defined(VISP_HAVE_X11)
-  vpDisplayX d(I, 0, 0, "Camera view");
+#if defined(VISP_HAVE_DISPLAY)
+#if (VISP_CXX_STANDARD >= VISP_CXX_STANDARD_11)
+  std::shared_ptr<vpDisplay> display = vpDisplayFactory::createDisplay(I, 0, 0, "Camera view");
+#else
+  vpDisplay *display = vpDisplayFactory::allocateDisplay(I, 0, 0, "Camera view");
+#endif
 #endif
   vpDisplay::display(I);
   vpDisplay::flush(I);
@@ -45,5 +50,11 @@ int main()
 
     vpDisplay::flush(I);
   }
+
+#if (VISP_CXX_STANDARD < VISP_CXX_STANDARD_11)
+  if (display != nullptr) {
+    delete display;
+  }
+#endif
 #endif
 }

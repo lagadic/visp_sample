@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/core/vpImage.h>
 #include <visp3/core/vpArray2D.h>
 #include <visp3/klt/vpKltOpencv.h>
@@ -31,7 +32,7 @@ int main()
 
     // Display the features tracked at the current iteration.
     klt.display(I);
-  }
+}
 #else
   std::cout << "vpKltOpencv requires ViSP with OpenCV." << std::endl;
 #endif

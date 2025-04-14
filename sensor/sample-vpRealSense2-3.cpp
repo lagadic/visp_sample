@@ -1,5 +1,5 @@
-#include <visp3/gui/vpDisplayGDI.h>
-#include <visp3/gui/vpDisplayX.h>
+#include <visp3/core/vpConfig.h>
+#include <visp3/gui/vpDisplayFactory.h>
 #include <visp3/sensor/vpRealSense2.h>
 
 #ifdef ENABLE_VISP_NAMESPACE
@@ -18,12 +18,13 @@ int main()
   vpImage<vpRGBa> Ic(rs.getIntrinsics(RS2_STREAM_COLOR).height, rs.getIntrinsics(RS2_STREAM_COLOR).width);
   vpImage<unsigned char> Ii(rs.getIntrinsics(RS2_STREAM_INFRARED).height,
                             rs.getIntrinsics(RS2_STREAM_INFRARED).width);
-#ifdef VISP_HAVE_X11
-  vpDisplayX dc(Ic, 0, 0, "Color");
-  vpDisplayX di(Ii, 100, 100, "Infrared");
-#elif defined(VISP_HAVE_GDI)
-  vpDisplayGDI dc(Ic, 0, 0, "Color");
-  vpDisplayGDI di(Ii, 100, 100, "Infrared");
+
+#if (VISP_CXX_STANDARD >= VISP_CXX_STANDARD_11)
+  std::shared_ptr<vpDisplay> dc = vpDisplayFactory::createDisplay(Ic, 0, 0, "Color");
+  std::shared_ptr<vpDisplay> di = vpDisplayFactory::createDisplay(Ii, 100, 100, "Infrared");
+#else
+  vpDisplay *dc = vpDisplayFactory::allocateDisplay(Ic, 0, 0, "Color");
+  vpDisplay *di = vpDisplayFactory::allocateDisplay(Ii, 100, 100, "Infrared");
 #endif
   while (true) {
     rs.acquire((unsigned char *)Ic.bitmap, NULL, NULL, Ii.bitmap);
@@ -34,6 +35,14 @@ int main()
     if (vpDisplay::getClick(Ic, false) || vpDisplay::getClick(Ii, false))
       break;
   }
+#if (VISP_CXX_STANDARD < VISP_CXX_STANDARD_11)
+  if (dc != nullptr) {
+    delete dc;
+  }
+  if (di != nullptr) {
+    delete di;
+  }
+#endif
 #endif
   return 0;
 }

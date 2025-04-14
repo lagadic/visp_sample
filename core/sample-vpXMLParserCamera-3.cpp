@@ -1,4 +1,4 @@
-//#include <visp3/core/vpCameraParameters.h>
+#include <visp3/core/vpConfig.h>
 #include <visp3/core/vpXmlParserCamera.h>
 #include <visp3/core/vpTime.h>
 

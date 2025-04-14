@@ -1,18 +1,12 @@
+
+#include <string.h>
+#include <visp3/core/vpConfig.h>
 #include <visp3/core/vpServer.h>
-#include <visp3/gui/vpDisplayX.h>
-#include <visp3/gui/vpDisplayGDI.h>
-
-//#include "vpRequestImage.h" //See vpRequest class documentation
-
-/* begin vpRequestImage.h */
 
 #include <visp/vpDebug.h>
 #include <visp3/core/vpException.h>
 #include <visp3/core/vpColVector.h>
-#include <visp/vpImageException.h>
-#include <visp3/core/vpImageConvert.h>
 #include <visp/vpRequest.h>
-#include <string.h>
 
 #ifdef ENABLE_VISP_NAMESPACE
 using namespace VISP_NAMESPACE_NAME;
@@ -30,11 +24,6 @@ public:
   virtual void encode();
   virtual void decode();
 };
-
-/* end vpRequestImage.h */
-
-/* begin vpRequestImage.cpp */
-//#include "vpRequestImage.h"
 
 vpRequestVector::vpRequestVector()
 {

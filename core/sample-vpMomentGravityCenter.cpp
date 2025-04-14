@@ -1,7 +1,8 @@
+#include <iostream>
+#include <visp3/core/vpConfig.h>
 #include <visp3/core/vpMomentObject.h>
 #include <visp3/core/vpPoint.h>
 #include <visp3/core/vpMomentGravityCenter.h>
-#include <iostream>
 
 #ifdef ENABLE_VISP_NAMESPACE
 using namespace VISP_NAMESPACE_NAME;

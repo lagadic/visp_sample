@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/core/vpMath.h>
 #include <visp3/core/vpThetaUVector.h>
 

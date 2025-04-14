@@ -1,5 +1,5 @@
-#include <visp3/gui/vpDisplayGDI.h>
-#include <visp3/gui/vpDisplayX.h>
+#include <visp3/core/vpConfig.h>
+#include <visp3/gui/vpDisplayFactory.h>
 #include <visp3/io/vpImageIo.h>
 #include <visp3/vision/vpKeyPoint.h>
 
@@ -32,10 +32,12 @@ int main()
   //Create the matching image with appropriate size
   keypoint.createImageMatching(IRef, I, IMatching);
 
-#if defined(VISP_HAVE_X11)
-  vpDisplayX display(IMatching, 0, 0, "Image matching");
-#elif defined(VISP_HAVE_GDI)
-  vpDisplayGDI display(IMatching, 0, 0, "Image matching");
+#if defined(VISP_HAVE_DISPLAY)
+#if (VISP_CXX_STANDARD >= VISP_CXX_STANDARD_11)
+  std::shared_ptr<vpDisplay> display = vpDisplayFactory::createDisplay(IMatching, 0, 0, "Image matching");
+#else
+  vpDisplay *display = vpDisplayFactory::allocateDisplay(IMatching, 0, 0, "Image matching");
+#endif
 #else
   std::cout << "No image viewer is available..." << std::endl;
   return -1;
@@ -50,6 +52,11 @@ int main()
   vpDisplay::flush(IMatching);
   vpDisplay::getClick(IMatching, true);
 
+#if (VISP_CXX_STANDARD < VISP_CXX_STANDARD_11)
+  if (display != nullptr) {
+    delete display;
+  }
+#endif
   return 0;
 }
 #else

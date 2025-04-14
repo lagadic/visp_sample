@@ -53,7 +53,7 @@
 
 // Using a thread to display the pointcloud with PCL produces a segfault on OSX
 #if( ! defined(__APPLE__) && ! defined(__MACH__) ) // Not OSX
-#  if (defined(VISP_HAVE_PTHREAD) || defined(_WIN32)) // Threading available
+#  if (defined(VISP_HAVE_PTHREAD) || defined(_WIN32)) && VISP_BUILD_DEPRECATED_FUNCTIONS // vpThread and vpMutex available
 #    define USE_THREAD
 #  endif
 #endif
@@ -63,8 +63,13 @@
 #  include <pcl/visualization/pcl_visualizer.h>
 #endif
 
+#ifdef ENABLE_VISP_NAMESPACE
+using namespace VISP_NAMESPACE_NAME;
+#endif
+
 #ifdef VISP_HAVE_PCL
 #ifdef USE_THREAD
+
 // Shared vars
 typedef enum
 {
@@ -74,11 +79,6 @@ typedef enum
 } t_CaptureState;
 t_CaptureState s_capture_state = capture_waiting;
 vpMutex s_mutex_capture;
-
-
-#ifdef ENABLE_VISP_NAMESPACE
-using namespace VISP_NAMESPACE_NAME;
-#endif
 
 vpThread::Return displayPointcloudFunction(vpThread::Args args)
 {

@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/sensor/vpFlyCaptureGrabber.h>
 
 #ifdef ENABLE_VISP_NAMESPACE
@@ -17,6 +18,6 @@ int main()
 
   for (int i = 0; i< nframes; i++) {
     g.acquire(I);
-  }
+}
 #endif
 }

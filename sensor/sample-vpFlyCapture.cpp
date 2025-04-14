@@ -1,4 +1,5 @@
 #include <iomanip>
+#include <visp3/core/vpConfig.h>
 #include <visp3/core/vpImage.h>
 #include <visp3/io/vpImageIo.h>
 #include <visp3/sensor/vpFlyCaptureGrabber.h>
@@ -65,6 +66,6 @@ int main()
     g.acquire(I);
     sprintf(filename, "image%04d.pgm", i);
     vpImageIo::write(I, filename);
-  }
+}
 #endif
 }

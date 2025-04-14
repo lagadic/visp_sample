@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/core/vpPoint.h>
 #include <visp3/core/vpMomentObject.h>
 #include <visp3/core/vpMomentBasic.h>

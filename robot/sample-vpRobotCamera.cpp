@@ -1,3 +1,6 @@
+#include <visp3/core/vpConfig.h>
+
+#ifdef VISP_BUILD_DEPRECATED_FUNCTIONS
 #include <visp3/robot/vpRobotCamera.h>
 
 #ifdef ENABLE_VISP_NAMESPACE
@@ -28,3 +31,12 @@ int main()
   robot.getPosition(cMw); // Position of the camera wrt the world frame
   std::cout << "New position of the camera cMw:\n" << cMw << std::endl;
 }
+#else
+#include <iostream>
+
+int main()
+{
+  std::cout << "This example requires compiling ViSP with the deprecated functions." << std::endl;
+  return EXIT_SUCCESS;
+}
+#endif

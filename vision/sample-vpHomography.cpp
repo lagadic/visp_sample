@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/core/vpHomogeneousMatrix.h>
 #include <visp3/vision/vpHomography.h>
 #include <visp3/core/vpMath.h>

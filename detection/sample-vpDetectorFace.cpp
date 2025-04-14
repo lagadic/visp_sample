@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/detection/vpDetectorFace.h>
 
 #ifdef ENABLE_VISP_NAMESPACE
@@ -17,6 +18,6 @@ int main()
     if (face_found) {
       vpRect face_bbox = face_detector.getBBox(0); // largest face has index 0
     }
-  }
+}
 #endif
 }

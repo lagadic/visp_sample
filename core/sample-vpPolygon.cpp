@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include <visp3/core/vpConfig.h>
 #include <visp3/core/vpPolygon.h>
 
 #ifdef ENABLE_VISP_NAMESPACE

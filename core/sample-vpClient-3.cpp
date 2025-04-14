@@ -1,19 +1,10 @@
-#include <visp3/core/vpClient.h>
-#include <visp3/sensor/vpV4l2Grabber.h>
-#include <visp3/core/vpImage.h>
-#include <visp3/gui/vpDisplayX.h>
-#include <visp3/gui/vpDisplayGDI.h>
 #include <iostream>
-
-//#include "vpRequestImage.h" //See vpRequest class documentation
-
-/* begin vpRequestImage.h */
-
-#include <visp3/core/vpImage.h>
-#include <visp3/core/vpImageException.h>
-#include <visp3/core/vpImageConvert.h>
-#include <visp3/core/vpRequest.h>
 #include <string.h>
+#include <visp3/core/vpConfig.h>
+#include <visp3/core/vpClient.h>
+#include <visp3/core/vpColVector.h>
+#include <visp3/core/vpRequest.h>
+
 
 #ifdef ENABLE_VISP_NAMESPACE
 using namespace VISP_NAMESPACE_NAME;

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <visp3/core/vpConfig.h>
 #include <visp3/core/vpIoTools.h>
 
 #ifdef ENABLE_VISP_NAMESPACE

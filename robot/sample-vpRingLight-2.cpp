@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/robot/vpRingLight.h>
 #include <visp3/core/vpTime.h>
 

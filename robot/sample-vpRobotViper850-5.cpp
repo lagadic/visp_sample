@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/robot/vpRobotViper850.h>
 #include <visp3/core/vpColVector.h>
 #include <visp3/core/vpMath.h>

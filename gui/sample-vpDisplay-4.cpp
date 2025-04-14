@@ -1,8 +1,5 @@
-#include <visp3/gui/vpDisplayOpenCV.h>
-#include <visp3/gui/vpDisplayX.h>
-#include <visp3/gui/vpDisplayGTK.h>
-#include <visp3/gui/vpDisplayGDI.h>
-#include <visp3/gui/vpDisplayD3D.h>
+#include <visp3/core/vpConfig.h>
+#include <visp3/gui/vpDisplayFactory.h>
 
 #ifdef ENABLE_VISP_NAMESPACE
 using namespace VISP_NAMESPACE_NAME;
@@ -12,30 +9,21 @@ int main()
 {
   vpImage<unsigned char> I(240, 320); // Create a black image
 
-  vpDisplay *d;
-
-  // Depending on the detected third party libraries, we instantiate here the
-  // first video device which is available
-#if defined(VISP_HAVE_X11)
-  d = new vpDisplayX;
-#elif defined(VISP_HAVE_GTK)
-  d = new vpDisplayGTK;
-#elif defined(VISP_HAVE_GDI)
-  d = new vpDisplayGDI;
-#elif defined(VISP_HAVE_D3D9)
-  d = new vpDisplayD3D;
-#elif defined(HAVE_OPENCV_HIGHGUI)
-  d = new vpDisplayOpenCV;
+#if defined(VISP_HAVE_DISPLAY)
+  // If a GUI library is available, create a display and
+  // initialize the display with the image I. Display and image are
+  // now link together.
+  // Otherwise, return nullptr or an unitialized shared_ptr.
+#if (VISP_CXX_STANDARD >= VISP_CXX_STANDARD_11)
+  std::shared_ptr<vpDisplay> display = vpDisplayFactory::createDisplay(I);
+#else
+  vpDisplay *display = vpDisplayFactory::allocateDisplay(I);
+#endif
 #else
   std::cout << "Sorry, no video device is available" << std::endl;
   return -1;
 #endif
 
-  // Initialize the display with the image I. Display and image are
-  // now link together.
-#ifdef VISP_HAVE_DISPLAY
-  d->init(I);
-#endif
   // Set the display background with image I content
   vpDisplay::display(I);
 
@@ -62,7 +50,9 @@ int main()
     vpTime::wait(5); // wait 5 ms
   } while (cpt_event < 5);
 
-#ifdef VISP_HAVE_DISPLAY
-  delete d;
+#if defined(VISP_HAVE_DISPLAY) && (VISP_CXX_STANDARD < VISP_CXX_STANDARD_11)
+  if (display != nullptr) {
+    delete display;
+  }
 #endif
 }

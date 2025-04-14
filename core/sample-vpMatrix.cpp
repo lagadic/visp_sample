@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include <visp3/core/vpConfig.h>
 #include <visp3/core/vpMatrix.h>
 
 #ifdef ENABLE_VISP_NAMESPACE

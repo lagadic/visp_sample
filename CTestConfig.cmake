@@ -4,7 +4,7 @@
 #
 # This file is part of the ViSP software.
 # Copyright (C) 2005 - 2010 by INRIA. All rights reserved.
-# 
+#
 # This software is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
 # ("GPL") version 2 as published by the Free Software Foundation.
@@ -12,11 +12,11 @@
 # distribution for additional information about the GNU GPL.
 #
 # For using ViSP with software that can not be combined with the GNU
-# GPL, please contact INRIA about acquiring a ViSP Professional 
+# GPL, please contact INRIA about acquiring a ViSP Professional
 # Edition License.
 #
 # See http://www.irisa.fr/lagadic/visp/visp.html for more information.
-# 
+#
 # This software was developed at:
 # INRIA Rennes - Bretagne Atlantique
 # Campus Universitaire de Beaulieu
@@ -26,7 +26,7 @@
 #
 # If you have questions regarding the use of this file, please contact
 # INRIA at visp@inria.fr
-# 
+#
 # This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
 # WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 #
@@ -48,7 +48,7 @@ set(CTEST_DROP_SITE_CDASH TRUE)
 
 #--------------------------------------------------------------------
 # BUILNAME variable construction
-# This variable will be used to set the build name which will appear 
+# This variable will be used to set the build name which will appear
 # on the ViSP dashboard http://cdash.irisa.fr/CDash/
 #--------------------------------------------------------------------
 # Start with the short system name, e.g. "Linux", "FreeBSD" or "Windows"
@@ -59,162 +59,232 @@ ELSE(BUILDNAME)
   SET(BUILDNAME "sample-${CMAKE_SYSTEM_NAME}")
 ENDIF(BUILDNAME)
 
-# Add the compiler name, e.g. "g++, msvc7..."
-IF(MSVC70)
-  SET(BUILDNAME "${BUILDNAME}-msvc70")
-ELSEIF(MSVC71)
-  SET(BUILDNAME "${BUILDNAME}-msvc71")
-ELSEIF(MSVC80)
-  SET(BUILDNAME "${BUILDNAME}-msvc80")
-ELSEIF(BORLAND)
-  SET(BUILDNAME "${BUILDNAME}-borland")
-ELSEIF(MINGW)
-  SET(BUILDNAME "${BUILDNAME}-mingw")
-ELSE(MSVC70)
+# Add the compiler name, e.g. "g++, msvc..."
+if(VISP_RUNTIME)
+  # msvc, mingw
+  set(BUILDNAME "${BUILDNAME}-${VISP_RUNTIME}")
+else()
   # g++
-  SET(BUILDNAME "${BUILDNAME}-${CMAKE_BASE_NAME}")
-ENDIF(MSVC70)
+  set(BUILDNAME "${BUILDNAME}-${CMAKE_BASE_NAME}")
+endif()
 
 # Find out the version of gcc being used.
-IF(CMAKE_COMPILER_IS_GNUCC)
-  EXEC_PROGRAM(${CMAKE_CXX_COMPILER}
-    ARGS -dumpversion
-    OUTPUT_VARIABLE COMPILER_VERSION
-  )
-  #MESSAGE("COMPILER_VERSION 1: ${COMPILER_VERSION}")
-  STRING(REGEX REPLACE ".* ([0-9])\\.([0-9])\\.[0-9].*" "\\1\\2" 
-    COMPILER_VERSION ${COMPILER_VERSION})
-  #MESSAGE("COMPILER_VERSION 2: ${COMPILER_VERSION}")
-
-  SET(BUILDNAME "${BUILDNAME}${COMPILER_VERSION}")
-  
-ENDIF(CMAKE_COMPILER_IS_GNUCC)
+if(CMAKE_CXX_COMPILER_VERSION)
+  set(BUILDNAME "${BUILDNAME}-${CMAKE_CXX_COMPILER_VERSION}")
+endif()
 
 # Add the type of library generation, e.g. "Dynamic or Static"
-IF(BUILD_SHARED_LIBS)
-  SET(BUILDNAME "${BUILDNAME}-Dynamic")
-ELSE(BUILD_SHARED_LIBS)
-  SET(BUILDNAME "${BUILDNAME}-Static")
-ENDIF(BUILD_SHARED_LIBS)
+if(BUILD_SHARED_LIBS)
+  set(BUILDNAME "${BUILDNAME}-Dyn")
+else(BUILD_SHARED_LIBS)
+  set(BUILDNAME "${BUILDNAME}-Sta")
+endif()
 
 # Add the build type, e.g. "Debug, Release..."
-# for Unix
-IF(CMAKE_BUILD_TYPE)
-  SET(BUILDNAME "${BUILDNAME}-${CMAKE_BUILD_TYPE}")
-ENDIF(CMAKE_BUILD_TYPE)
-# for Windows
-IF(CMAKE_CONFIGURATION_TYPES)
-  SET(BUILDNAME "${BUILDNAME}-${CMAKE_CONFIGURATION_TYPES}")
-ENDIF(CMAKE_CONFIGURATION_TYPES)
+if(CMAKE_BUILD_TYPE)
+  set(BUILDNAME "${BUILDNAME}-${CMAKE_BUILD_TYPE}")
+endif()
 
 #---- Robots ----
 # Add specific Afma4 robots
-IF(VISP_HAVE_AFMA4)
-  SET(BUILDNAME "${BUILDNAME}-Afma4")
-ENDIF(VISP_HAVE_AFMA4)
- 
+if(VISP_HAVE_AFMA4)
+  set(BUILDNAME "${BUILDNAME}-Afma4")
+endif()
+
 # Add specific Afma6 robots
-IF(VISP_HAVE_AFMA6)
-  SET(BUILDNAME "${BUILDNAME}-Afma6")
-ENDIF(VISP_HAVE_AFMA6)
+if(VISP_HAVE_AFMA6)
+  set(BUILDNAME "${BUILDNAME}-Afma6")
+endif()
 
 # Add specific Ptu46 robots
-IF(VISP_HAVE_PTU46)
-  SET(BUILDNAME "${BUILDNAME}-Ptu46")
-ENDIF(VISP_HAVE_PTU46)
+if(VISP_HAVE_PTU46)
+  set(BUILDNAME "${BUILDNAME}-Ptu46")
+endif()
 
 # Add specific Biclops robots
-IF(VISP_HAVE_BICLOPS)
-  SET(BUILDNAME "${BUILDNAME}-Biclops")
-ENDIF(VISP_HAVE_BICLOPS)
+if(VISP_HAVE_BICLOPS)
+  set(BUILDNAME "${BUILDNAME}-Biclops")
+endif()
 
-#---- Framegrabers ----
-# Firewire dc1394-2.x 
-IF(VISP_HAVE_DC1394_2)
-  SET(BUILDNAME "${BUILDNAME}-dc1394.2")
-ENDIF(VISP_HAVE_DC1394_2)
-# Firewire dc1394-1.x 
-IF(VISP_HAVE_DC1394_1)
-  SET(BUILDNAME "${BUILDNAME}-dc1394.1")
-ENDIF(VISP_HAVE_DC1394_1)
+# Add specific Pioneer robots
+if(VISP_HAVE_PIONEER)
+  set(BUILDNAME "${BUILDNAME}-aria")
+endif()
+
+# Add specific Haption Virtuose haptic device
+if(VISP_HAVE_VIRTUOSE)
+  set(BUILDNAME "${BUILDNAME}-virtuose")
+endif()
+
+#---- Framegrabers/Sensors ----
+# Firewire dc1394-2.x
+if(VISP_HAVE_DC1394)
+  set(BUILDNAME "${BUILDNAME}-dc1394")
+endif()
 # Video 4 linux 2 (V4L2)
-IF(VISP_HAVE_V4L2)
-  SET(BUILDNAME "${BUILDNAME}-v4l2")
-ENDIF(VISP_HAVE_V4L2)
+if(VISP_HAVE_V4L2)
+  set(BUILDNAME "${BUILDNAME}-v4l2")
+endif()
 # Directshow
-IF(VISP_HAVE_DIRECTSHOW)
-  SET(BUILDNAME "${BUILDNAME}-Directshow")
-ENDIF(VISP_HAVE_DIRECTSHOW)
+if(VISP_HAVE_DIRECTSHOW)
+  set(BUILDNAME "${BUILDNAME}-dshow")
+endif()
+if(VISP_HAVE_CMU1394)
+  set(BUILDNAME "${BUILDNAME}-CMU1394")
+endif()
+if(VISP_HAVE_LIBFREENECT)
+  set(BUILDNAME "${BUILDNAME}-freenect")
+endif()
+if(VISP_HAVE_REALSENSE)
+  set(BUILDNAME "${BUILDNAME}-rs")
+endif()
+if(VISP_HAVE_PCL)
+  set(BUILDNAME "${BUILDNAME}-pcl")
+endif()
+if(VISP_HAVE_LIBUSB_1)
+  set(BUILDNAME "${BUILDNAME}-usb")
+endif()
+if(VISP_HAVE_FLYCAPTURE)
+  set(BUILDNAME "${BUILDNAME}-flycap")
+endif()
+if(VISP_HAVE_PYLON)
+  set(BUILDNAME "${BUILDNAME}-pylon")
+endif()
+if(VISP_HAVE_UEYE)
+  set(BUILDNAME "${BUILDNAME}-ueye")
+endif()
+if(VISP_HAVE_COMEDI)
+  set(BUILDNAME "${BUILDNAME}-comedi")
+endif()
+if(VISP_HAVE_ATI)
+  set(BUILDNAME "${BUILDNAME}-ati")
+endif()
 
 #---- Video-devices ----
 # X11
-IF(VISP_HAVE_X11)
-  SET(BUILDNAME "${BUILDNAME}-X11")
-ENDIF(VISP_HAVE_X11)
+if(VISP_HAVE_X11)
+  set(BUILDNAME "${BUILDNAME}-X11")
+endif()
 # GTK
-IF(VISP_HAVE_GTK)
-  SET(BUILDNAME "${BUILDNAME}-gtk")
-ENDIF(VISP_HAVE_GTK)
+if(VISP_HAVE_GTK)
+  set(BUILDNAME "${BUILDNAME}-gtk")
+endif()
 # GDI (Windows Graphics Device Interface)
-IF(VISP_HAVE_GDI)
-  SET(BUILDNAME "${BUILDNAME}-gdi")
-ENDIF(VISP_HAVE_GDI)
+if(VISP_HAVE_GDI)
+  set(BUILDNAME "${BUILDNAME}-gdi")
+endif()
 # D3D (Direct3D9)
-IF(VISP_HAVE_D3D9)
-  SET(BUILDNAME "${BUILDNAME}-Direct3D")
-ENDIF(VISP_HAVE_D3D9)
+if(VISP_HAVE_D3D9)
+  set(BUILDNAME "${BUILDNAME}-Direct3D")
+endif()
 # OpenCV
-IF(VISP_HAVE_OPENCV)
-  SET(BUILDNAME "${BUILDNAME}-OpenCV")
-ENDIF(VISP_HAVE_OPENCV)
+if(VISP_HAVE_OPENCV)
+  if(OpenCV_VERSION)
+    if(OPENCV_XFEATURES2D_FOUND OR OPENCV_XFEATURES2D_FOUND)
+      set(BUILDNAME "${BUILDNAME}-OpenCV_contrib${OpenCV_VERSION}")
+    else()
+      set(BUILDNAME "${BUILDNAME}-OpenCV${OpenCV_VERSION}")
+    endif()
+  else()
+    set(BUILDNAME "${BUILDNAME}-OpenCV")
+  endif()
+endif()
 
 #---- Mathematics ----
-# GSL (Gnu Scientific Library
-IF(VISP_HAVE_GSL)
-  SET(BUILDNAME "${BUILDNAME}-gsl")
-ENDIF(VISP_HAVE_GSL)
+# Lapack (Linear Algebra PACKage)
+if(VISP_HAVE_LAPACK)
+  set(BUILDNAME "${BUILDNAME}-lapack")
+endif()
+# GSL (Gnu Scientific Library)
+if(VISP_HAVE_GSL)
+  set(BUILDNAME "${BUILDNAME}-gsl")
+endif()
+if(VISP_HAVE_EIGEN3)
+  set(BUILDNAME "${BUILDNAME}-eigen3")
+endif()
 
 #---- Simulator ----
+# Ogre
+if(VISP_HAVE_OGRE)
+  set(BUILDNAME "${BUILDNAME}-Ogre")
+endif()
+if(VISP_HAVE_OIS)
+  set(BUILDNAME "${BUILDNAME}-OIS")
+endif()
 # Coin
-IF(VISP_HAVE_COIN)
-  SET(BUILDNAME "${BUILDNAME}-Coin")
-ENDIF(VISP_HAVE_COIN)
+if(VISP_HAVE_COIN3D)
+  set(BUILDNAME "${BUILDNAME}-Coin")
+endif()
 # SoQt
-IF(VISP_HAVE_SOQT)
-  SET(BUILDNAME "${BUILDNAME}-SoQt")
-ENDIF(VISP_HAVE_SOQT)
+if(VISP_HAVE_SOQT)
+  set(BUILDNAME "${BUILDNAME}-SoQt")
+endif()
 # Qt
-IF(VISP_HAVE_QT)
-  SET(BUILDNAME "${BUILDNAME}-Qt${DESIRED_QT_VERSION}")
-ENDIF(VISP_HAVE_QT)
+if(VISP_HAVE_QT)
+  set(BUILDNAME "${BUILDNAME}-Qt${DESIRED_QT_VERSION}")
+endif()
 # SoWin
-IF(VISP_HAVE_SOWIN)
-  SET(BUILDNAME "${BUILDNAME}-SoWin")
-ENDIF(VISP_HAVE_SOWIN)
+if(VISP_HAVE_SOWIN)
+  set(BUILDNAME "${BUILDNAME}-SoWin")
+endif()
 # SoXt
-IF(VISP_HAVE_SOXT)
-  SET(BUILDNAME "${BUILDNAME}-SoXt")
-ENDIF(VISP_HAVE_SOXT)
+if(VISP_HAVE_SOXT)
+  set(BUILDNAME "${BUILDNAME}-SoXt")
+endif()
 
 #---- Images ----
-IF(VISP_HAVE_FFMPEG)
-  SET(BUILDNAME "${BUILDNAME}-ffmpeg")
-ENDIF(VISP_HAVE_FFMPEG)
-IF(VISP_HAVE_LIBJPEG)
-  SET(BUILDNAME "${BUILDNAME}-libjpeg")
-ENDIF(VISP_HAVE_LIBJPEG)
-IF(VISP_HAVE_LIBPNG)
-  SET(BUILDNAME "${BUILDNAME}-libpng")
-ENDIF(VISP_HAVE_LIBPNG)
+if(VISP_HAVE_JPEG)
+  set(BUILDNAME "${BUILDNAME}-jpeg")
+endif()
+if(VISP_HAVE_PNG)
+  set(BUILDNAME "${BUILDNAME}-png")
+endif()
 
 #---- Misc ----
 # XML
-IF(VISP_HAVE_XML2)
-  SET(BUILDNAME "${BUILDNAME}-xml")
-ENDIF(VISP_HAVE_XML2)
+if(VISP_HAVE_XML2)
+  set(BUILDNAME "${BUILDNAME}-xml")
+endif()
 # PThread
-IF(VISP_HAVE_PTHREAD)
-  SET(BUILDNAME "${BUILDNAME}-pthread")
-ENDIF(VISP_HAVE_PTHREAD)
+if(VISP_HAVE_THREADS)
+  set(BUILDNAME "${BUILDNAME}-threads")
+endif()
+# OpenMP
+if(VISP_HAVE_OPENMP)
+  set(BUILDNAME "${BUILDNAME}-OpenMP")
+endif()
+if(VISP_HAVE_DMTX)
+  set(BUILDNAME "${BUILDNAME}-dmtx")
+endif()
+if(VISP_HAVE_ZBAR)
+  set(BUILDNAME "${BUILDNAME}-zbar")
+endif()
+if(VISP_HAVE_APRILTAG)
+  set(BUILDNAME "${BUILDNAME}-apriltag")
+endif()
 
-#MESSAGE("BUILDNAME=${BUILDNAME}")
+
+#---- Special compiler flags ----
+if(ACTIVATE_WARNING_STRICT_OVERFLOW)
+  set(BUILDNAME "${BUILDNAME}-Wov")
+endif()
+if(ACTIVATE_WARNING_FLOAT_EQUAL)
+  set(BUILDNAME "${BUILDNAME}-Weq")
+endif()
+if(VISP_CXX_STANDARD EQUAL VISP_CXX_STANDARD_98)
+  set(BUILDNAME "${BUILDNAME}-c98")
+elseif(VISP_CXX_STANDARD EQUAL VISP_CXX_STANDARD_11)
+  set(BUILDNAME "${BUILDNAME}-c11")
+elseif(VISP_CXX_STANDARD EQUAL VISP_CXX_STANDARD_14)
+  set(BUILDNAME "${BUILDNAME}-c14")
+elseif(VISP_CXX_STANDARD EQUAL VISP_CXX_STANDARD_17)
+  set(BUILDNAME "${BUILDNAME}-c17")
+endif()
+if(ENABLE_MOMENTS_COMBINE_MATRICES)
+  set(BUILDNAME "${BUILDNAME}-Moment")
+endif()
+if(ENABLE_SSE2 OR ENABLE_SSE3 OR ENABLE_SSSE3)
+  set(BUILDNAME "${BUILDNAME}-sse")
+endif()
+
+#message("BUILDNAME=${BUILDNAME}")

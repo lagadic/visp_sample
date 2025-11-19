@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/core/vpTranslationVector.h>
 
 #ifdef ENABLE_VISP_NAMESPACE

@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/gui/vpDisplayGTK.h>
 #include <visp3/core/vpImage.h>
 #include <visp3/core/vpImagePoint.h>
@@ -82,7 +83,7 @@ int main()
     }
     vpDisplay::flush(I);
     vpTime::wait(1);
-  }
+}
 #endif
   return 0;
 }

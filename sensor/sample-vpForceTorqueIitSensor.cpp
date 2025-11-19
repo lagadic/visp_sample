@@ -44,6 +44,7 @@
 
 #include <iostream>
 
+#include <visp3/core/vpConfig.h>
 #include <visp3/sensor/vpForceTorqueIitSensor.h>
 #include <visp3/core/vpTime.h>
 

@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/detection/vpDetectorDataMatrixCode.h>
 #include <visp3/io/vpImageIo.h>
 
@@ -22,6 +23,6 @@ int main()
         std::cout << "  Point " << j << ": " << p[j] << std::endl;
       std::cout << "  Message: \"" << detector.getMessage(i) << "\"" << std::endl;
     }
-  }
+}
 #endif
 }

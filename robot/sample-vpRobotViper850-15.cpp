@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/robot/vpRobotViper850.h>
 #include <visp3/core/vpColVector.h>
 #include <visp3/core/vpTime.h>
@@ -20,6 +21,6 @@ int main()
     robot.getForceTorque(H);
     std::cout << "Measured force/torque: " << H.t() << std::endl;
     vpTime::wait(5);
-  }
+}
 #endif
 }

@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/core/vpImage.h>
 #include <visp3/io/vpImageIo.h>
 #include <visp3/sensor/vpFlyCaptureGrabber.h>
@@ -20,6 +21,6 @@ int main()
 
   for (int i = 0; i< nframes; i++) {
     g.acquire(I);
-  }
+}
 #endif
 }

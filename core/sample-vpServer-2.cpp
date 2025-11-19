@@ -1,6 +1,7 @@
+#include <string.h>
+#include <visp3/core/vpConfig.h>
 #include <visp3/core/vpServer.h>
-#include <visp3/gui/vpDisplayX.h>
-#include <visp3/gui/vpDisplayGDI.h>
+#include <visp3/gui/vpDisplayFactory.h>
 
 //#include "vpRequestImage.h" //See vpRequest class documentation
 
@@ -10,7 +11,6 @@
 #include <visp3/core/vpImageException.h>
 #include <visp3/core/vpImageConvert.h>
 #include <visp3/core/vpRequest.h>
-#include <string.h>
 
 #ifdef ENABLE_VISP_NAMESPACE
 using namespace VISP_NAMESPACE_NAME;
@@ -82,10 +82,10 @@ int main(int argc, const char **argv)
   vpServer serv(port);
   serv.start();
 
-#ifdef VISP_HAVE_X11
-  vpDisplayX display;
-#elif defined VISP_HAVE_GDI
-  vpDisplayGDI display;
+#if (VISP_CXX_STANDARD >= VISP_CXX_STANDARD_11)
+  std::shared_ptr<vpDisplay> display = vpDisplayFactory::createDisplay();
+#else
+  vpDisplay *display = vpDisplayFactory::allocateDisplay();
 #endif
 
   vpImage<unsigned char> I;
@@ -103,9 +103,9 @@ int main(int argc, const char **argv)
       std::string id = serv.getRequestIdFromIndex(index);
 
       if (id == "image") {
-#if defined(VISP_HAVE_X11) || defined(VISP_HAVE_GDI)
-        if (!display.isInitialised())
-          display.init(I, -1, -1, "Remote display");
+#if defined(VISP_HAVE_DISPLAY)
+        if (!display->isInitialised())
+          display->init(I, -1, -1, "Remote display");
 #endif
 
         vpDisplay::display(I);
@@ -118,5 +118,10 @@ int main(int argc, const char **argv)
     }
   }
 
+#if (VISP_CXX_STANDARD < VISP_CXX_STANDARD_11)
+  if (display != nullptr) {
+    delete display;
+  }
+#endif
   return 0;
 }

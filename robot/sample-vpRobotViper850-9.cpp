@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/robot/vpRobotViper850.h>
 #include <visp3/core/vpColVector.h>
 
@@ -33,6 +34,6 @@ int main()
     robot.getVelocity(vpRobot::ARTICULAR_FRAME, q_dot_mes);
     vpTime::wait(40); // wait 40 ms
     // here q_dot_mes is equal to [0.1, 0.2, 0.3, M_PI/8, M_PI/4, M_PI/16]
-  }
+}
 #endif
 }

@@ -1,5 +1,6 @@
-#include <visp3/vision/vpPoseFeatures.h>
 #include <iostream>
+#include <visp3/core/vpConfig.h>
+#include <visp3/vision/vpPoseFeatures.h>
 
 #ifdef ENABLE_VISP_NAMESPACE
 using namespace VISP_NAMESPACE_NAME;

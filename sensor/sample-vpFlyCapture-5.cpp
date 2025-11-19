@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/sensor/vpFlyCaptureGrabber.h>
 
 #ifdef ENABLE_VISP_NAMESPACE
@@ -34,6 +35,6 @@ int main()
       std::cout << "Pixel format is not supported" << std::endl;
       return -1;
     }
-  }
+}
 #endif
 }

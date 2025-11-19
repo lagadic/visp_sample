@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/tt/vpTemplateTrackerSSDInverseCompositional.h>
 #include <visp3/tt/vpTemplateTrackerWarpHomography.h>
 

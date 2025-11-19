@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/core/vpImage.h>
 #include <visp3/sensor/vp1394TwoGrabber.h>
 #include <visp3/robot/vpRingLight.h>
@@ -17,6 +18,6 @@ int main()
   for (int i = 0; i < 10; i++) {
     light.pulse(); // Send a pulse to the lighting system
     g.acquire(I); // Acquire an image
-  }
+}
 #endif
 }

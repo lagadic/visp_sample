@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/core/vpColVector.h>
 #include <visp3/visual_features/vpFeatureThetaU.h>
 #include <visp3/visual_features/vpFeatureTranslation.h>

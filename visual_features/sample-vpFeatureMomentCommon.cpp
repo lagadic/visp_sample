@@ -1,11 +1,12 @@
+#include <iostream>
+#include <vector>
+#include <visp3/core/vpConfig.h>
 #include <visp3/core/vpMomentObject.h>
 #include <visp3/core/vpMomentCommon.h>
 #include <visp3/core/vpPoint.h>
 #include <visp3/visual_features/vpFeatureMoment.h>
 #include <visp3/visual_features/vpFeatureMomentCommon.h>
 #include <visp3/vs/vpServo.h>
-#include <iostream>
-#include <vector>
 
 #ifdef ENABLE_VISP_NAMESPACE
 using namespace VISP_NAMESPACE_NAME;

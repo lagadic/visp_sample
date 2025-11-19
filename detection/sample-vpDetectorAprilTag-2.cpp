@@ -1,3 +1,4 @@
+#include <visp3/core/vpConfig.h>
 #include <visp3/detection/vpDetectorAprilTag.h>
 #include <visp3/io/vpImageIo.h>
 
